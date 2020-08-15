@@ -32,8 +32,9 @@ const Drawer = ({ navigation }) => {
                             return (
                                 <TouchableOpacity
                                     onPress={() => {
-                                        navigation.setParams({ book, chapter })
+                                        navigation.setParams({ book, chapter });
                                         navigation.closeDrawer();
+                                        setBookSelected(null);
                                     }}
                                     style={{ display: 'flex', marginHorizontal: 10, marginVertical: 10, width: 30, height: 30, borderWidth: 1, borderColor: 'grey' }}
                                 >

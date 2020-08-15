@@ -1,6 +1,6 @@
 
-import * as React from 'react';
-import { Button } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Button } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import bible from './bible.json';
 const Stack = createStackNavigator();
 
 const MainNavigator = ({ navigation }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
   const book = navigation.state.params && navigation.state.params.book || bible[0].book;
   const chapter = navigation.state.params && navigation.state.params.chapter || '1';
 
@@ -26,6 +27,21 @@ const MainNavigator = ({ navigation }) => {
                 navigation.toggleDrawer();
               }}
             />,
+            headerRight: () => (
+              <View>
+                <Button
+                  title=":"
+                  onPress={() => {
+                    // add dropdown
+                    setShowDropdown(!showDropdown);
+                  }}
+                />
+                {showDropdown && <View style={{ position: 'absolute', top: 10, right: 15, height: 100, width: 100, borderWidth: 1, borderColor: 'blue' }}>
+                  <Text>Share</Text>
+                  <Text>Settings</Text>
+                  <Text>Feedback</Text>
+                </View>}
+              </View>),
             headerTitle: book
           }}>
           {props => <Main {...props} book={book} chapter={chapter} />}
