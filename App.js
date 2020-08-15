@@ -21,7 +21,7 @@ const MainNavigator = ({ navigation }) => {
         <Stack.Screen name="Main"
           options={{
             headerLeft: () => <Button
-              title="="
+              title="Menu"
               onPress={() => {
                 navigation.toggleDrawer();
               }}

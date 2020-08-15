@@ -24,7 +24,7 @@ const Main = ({ book, chapter }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: Constants.statusBarHeight,
+        marginTop: 15,
     },
     scrollView: {
         marginHorizontal: 20,
