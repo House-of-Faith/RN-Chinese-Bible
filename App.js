@@ -1,11 +1,12 @@
 
 import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, TouchableOpacity } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Main from './screens/Main';
+import Settings from './screens/Settings';
 import Drawer from './screens/Drawer';
 import bible from './bible.json';
 
@@ -22,7 +23,7 @@ const MainNavigator = ({ navigation }) => {
         <Stack.Screen name="Main"
           options={{
             headerLeft: () => <Button
-              title="Menu"
+              title="="
               onPress={() => {
                 navigation.toggleDrawer();
               }}
@@ -32,13 +33,12 @@ const MainNavigator = ({ navigation }) => {
                 <Button
                   title=":"
                   onPress={() => {
-                    // add dropdown
                     setShowDropdown(!showDropdown);
                   }}
                 />
-                {showDropdown && <View style={{ position: 'absolute', top: 10, right: 15, height: 100, width: 100, borderWidth: 1, borderColor: 'blue' }}>
+                {showDropdown && <View style={{ position: 'absolute', top: 10, right: 15, height: 100, width: 100, borderWidth: 1, borderColor: 'blue', backgroundColor: 'white' }}>
                   <Text>Share</Text>
-                  <Text>Settings</Text>
+                  <TouchableOpacity onPress={() => console.log('navigate')}><Text>Settings</Text></TouchableOpacity>
                   <Text>Feedback</Text>
                 </View>}
               </View>),
@@ -46,6 +46,7 @@ const MainNavigator = ({ navigation }) => {
           }}>
           {props => <Main {...props} book={book} chapter={chapter} />}
         </Stack.Screen>
+        <Stack.Screen name='Settings' component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   )
