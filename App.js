@@ -13,11 +13,12 @@ const Stack = createStackNavigator();
 
 const MainNavigator = ({ navigation }) => {
   const book = navigation.state.params && navigation.state.params.book || bible[0].book;
+  const chapter = navigation.state.params && navigation.state.params.chapter || '1';
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Main" component={Main}
+        <Stack.Screen name="Main"
           options={{
             headerLeft: () => <Button
               title="="
@@ -26,7 +27,9 @@ const MainNavigator = ({ navigation }) => {
               }}
             />,
             headerTitle: book
-          }} />
+          }}>
+          {props => <Main {...props} book={book} chapter={chapter} />}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   )

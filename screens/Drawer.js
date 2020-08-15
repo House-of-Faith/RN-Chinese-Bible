@@ -12,7 +12,7 @@ const Drawer = ({ navigation }) => {
                 return (
                     <TouchableOpacity onPress={() => {
                         // add chapters to pick from
-                        navigation.navigate('Main', { book, chapter: '2' })
+                        navigation.setParams({ book, chapter: '2' })
                         navigation.closeDrawer();
                     }}><Text key={index}>{book}</Text></TouchableOpacity>
                 )
