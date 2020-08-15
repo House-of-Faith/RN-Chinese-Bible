@@ -14,36 +14,37 @@ const Stack = createStackNavigator();
 
 const MainNavigator = ({ navigation }) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const book = navigation.state.params && navigation.state.params.book || bible[0].book;
+  const book = navigation.state.params && navigation.state.params.book || bible.oldTestament[0].book;
   const chapter = navigation.state.params && navigation.state.params.chapter || '1';
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Main"
-          options={{
-            headerLeft: () => <Button
-              title="="
-              onPress={() => {
-                navigation.toggleDrawer();
-              }}
-            />,
-            headerRight: () => (
-              <View>
-                <Button
-                  title=":"
-                  onPress={() => {
-                    setShowDropdown(!showDropdown);
-                  }}
-                />
-                {showDropdown && <View style={{ position: 'absolute', top: 10, right: 15, height: 100, width: 100, borderWidth: 1, borderColor: 'blue', backgroundColor: 'white' }}>
-                  <Text>Share</Text>
-                  <TouchableOpacity onPress={() => console.log('navigate')}><Text>Settings</Text></TouchableOpacity>
-                  <Text>Feedback</Text>
-                </View>}
-              </View>),
-            headerTitle: book
-          }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerLeft: () => <Button
+            title="="
+            onPress={() => {
+              navigation.toggleDrawer();
+            }}
+          />,
+          headerRight: () => (
+            <View>
+              <Button
+                title=":"
+                onPress={() => {
+                  setShowDropdown(!showDropdown);
+                }}
+              />
+              {showDropdown && <View style={{ position: 'absolute', top: 10, right: 15, height: 100, width: 100, borderWidth: 1, borderColor: 'blue', backgroundColor: 'white' }}>
+                <Text>Share</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Settings')}><Text>Settings</Text></TouchableOpacity>
+                <Text>Feedback</Text>
+              </View>}
+            </View>),
+          headerTitle: book
+        }}
+      >
+        <Stack.Screen name="Main">
           {props => <Main {...props} book={book} chapter={chapter} />}
         </Stack.Screen>
         <Stack.Screen name='Settings' component={Settings} />

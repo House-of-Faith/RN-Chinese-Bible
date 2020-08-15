@@ -4,20 +4,28 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import bible from '../bible.json';
 
 const Drawer = ({ navigation }) => {
+    const [sectionSelected, setSectionSelected] = useState('oldTestament');
     const [bookSelected, setBookSelected] = useState(null);
     const [chapters, setChapters] = useState(null);
-    const books = bible.map(obj => obj.book);
+    const books = bible[sectionSelected].map(obj => obj.book);
 
     useEffect(() => {
         if (bookSelected) {
-            const bookObj = bible.filter(obj => obj.book === bookSelected);
-            const chapters = bookObj[0].chapters.map(obj => obj.chapter);
-            setChapters(chapters);
+            const bookObj = bible[sectionSelected].filter(obj => obj.book === bookSelected);
+            if (bookObj.length < 1) setChapters(null);
+            else {
+                const chapters = bookObj[0].chapters.map(obj => obj.chapter);
+                setChapters(chapters);
+            }
         }
-    }, [bookSelected]);
+    }, [bookSelected, sectionSelected]);
 
     return (
         <View style={{ marginTop: 100, marginHorizontal: 15 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+                <TouchableOpacity onPress={() => setSectionSelected('oldTestament')}><Text>Old Testament</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setSectionSelected('newTestament')}><Text>New Testament</Text></TouchableOpacity>
+            </View>
             {books && books.map((book, index) => {
                 return (
                     <TouchableOpacity
