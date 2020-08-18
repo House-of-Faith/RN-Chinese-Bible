@@ -36,20 +36,24 @@ const Drawer = ({ navigation }) => {
                         style={{ marginBottom: 10, width: '100%', borderColor: 'blue', borderWidth: 1 }}
                     >
                         <Text key={index}>{book}</Text>
-                        {bookSelected === book && chapters && chapters.map(chapter => {
-                            return (
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        navigation.setParams({ book, chapter });
-                                        navigation.closeDrawer();
-                                        setBookSelected(null);
-                                    }}
-                                    style={{ display: 'flex', marginHorizontal: 10, marginVertical: 10, width: 30, height: 30, borderWidth: 1, borderColor: 'grey' }}
-                                >
-                                    <Text>{chapter}</Text>
-                                </TouchableOpacity>
-                            )
-                        })}
+                        <View
+                            style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+                        >
+                            {bookSelected === book && chapters && chapters.map(chapter => {
+                                return (
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            navigation.setParams({ book, chapter });
+                                            navigation.closeDrawer();
+                                            setBookSelected(null);
+                                        }}
+                                        style={{ marginHorizontal: 10, marginVertical: 10, width: 30, height: 30, borderWidth: 1, borderColor: 'grey' }}
+                                    >
+                                        <Text>{chapter}</Text>
+                                    </TouchableOpacity>
+                                )
+                            })}
+                        </View>
                     </TouchableOpacity>
                 )
             })}

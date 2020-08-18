@@ -1,12 +1,43 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const Settings = () => {
+const Stack = createStackNavigator();
+
+const Settings = ({ navigation }) => {
     return (
-        <View style={styles.container}>
-            <Text>Settings</Text>
-        </View>
+        <NavigationContainer>
+            <Stack.Navigator
+                screenOptions={{
+                    headerLeft: () => <Button
+                        title="<"
+                        onPress={() => {
+                            navigation.navigate('Main');
+                        }}
+                    />,
+                }}
+            >
+                <Stack.Screen name='Settings'>
+                    {() => <View style={styles.container}>
+                        <Text>Settings</Text>
+                    </View>}
+                </Stack.Screen>
+            </Stack.Navigator>
+        </NavigationContainer>
     )
+};
+
+Settings.navigationOptions = ({
+    navigation,
+}) => {
+    return {
+        headerLeft: () =>
+            <TouchableOpacity onPress={() => navigation.pop()}><Text>back</Text></TouchableOpacity>,
+        headerTitle: () =>
+            <View><Text>Settings</Text></View>,
+    };
 };
 
 const styles = StyleSheet.create({

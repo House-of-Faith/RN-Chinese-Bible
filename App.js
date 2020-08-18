@@ -47,7 +47,6 @@ const MainNavigator = ({ navigation }) => {
         <Stack.Screen name="Main">
           {props => <Main {...props} book={book} chapter={chapter} />}
         </Stack.Screen>
-        <Stack.Screen name='Settings' component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   )
@@ -67,6 +66,7 @@ const drawerNavigator = createDrawerNavigator(
 const App = createAppContainer(
   createSwitchNavigator({
     Main: drawerNavigator,
+    Settings: Settings
   })
 );
 
