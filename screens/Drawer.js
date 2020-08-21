@@ -29,13 +29,14 @@ const Drawer = ({ navigation }) => {
             {books && books.map((book, index) => {
                 return (
                     <TouchableOpacity
+                        key={index}
                         onPress={() => {
                             if (book === bookSelected) setBookSelected(null)
                             else setBookSelected(book)
                         }}
                         style={{ marginBottom: 10, width: '100%', borderColor: 'blue', borderWidth: 1 }}
                     >
-                        <Text key={index}>{book}</Text>
+                        <Text>{book}</Text>
                         <View
                             style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
                         >

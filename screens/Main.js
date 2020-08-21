@@ -12,10 +12,9 @@ const Main = ({ book, chapter }) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
-                <Text>Chapter {chapter}</Text>
                 {verses.map(obj => {
                     return (
-                        <Text>{obj.verse}: {obj.text}</Text>
+                        <Text key={obj.verse} style={styles.text}>{obj.verse}: {obj.text}</Text>
                     )
                 })}
             </ScrollView>
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     text: {
-        fontSize: 42,
+        marginVertical: 5
     },
 });
 
