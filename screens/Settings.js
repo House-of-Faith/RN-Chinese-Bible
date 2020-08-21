@@ -21,7 +21,20 @@ const Settings = ({ navigation }) => {
             >
                 <Stack.Screen name='Settings'>
                     {() => <View style={styles.container}>
-                        <Text>Settings</Text>
+                        <View style={styles.subContainer}>
+                            <Text style={styles.title}>THEME</Text>
+                            <TouchableOpacity><Text style={styles.option}>Light Theme</Text></TouchableOpacity>
+                            <TouchableOpacity><Text style={styles.option}>Dark Theme</Text></TouchableOpacity>
+                        </View>
+                        <View style={styles.subContainer}>
+                            <Text style={styles.title}>LANGUAGE</Text>
+                            <TouchableOpacity><Text style={styles.option}>Traditional Chinese</Text></TouchableOpacity>
+                            <TouchableOpacity><Text style={styles.option}>Simplified Chinese</Text></TouchableOpacity>
+                        </View>
+                        <View style={styles.subContainer}>
+                            <Text style={styles.title}>ADDITIONAL INFO</Text>
+                            <TouchableOpacity><Text style={styles.option}>About Us</Text></TouchableOpacity>
+                        </View>
                     </View>}
                 </Stack.Screen>
             </Stack.Navigator>
@@ -44,10 +57,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: 15,
+        marginLeft: 20
     },
-    text: {
-        fontSize: 42,
+    subContainer: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'grey',
     },
+    title: {
+        fontSize: 17,
+        fontWeight: 'bold'
+    },
+    option: {
+        marginLeft: 20
+    }
 });
 
 export default Settings;
