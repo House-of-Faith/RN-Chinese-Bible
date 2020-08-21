@@ -23,41 +23,44 @@ const Drawer = ({ navigation }) => {
     return (
         <View style={{ marginTop: 100, marginHorizontal: 15 }}>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
-                <TouchableOpacity onPress={() => setSectionSelected('oldTestament')}><Text>Old Testament</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setSectionSelected('newTestament')}><Text>New Testament</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => { setBookSelected(null); setSectionSelected('oldTestament') }}><Text>Old Testament</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => { setBookSelected(null); setSectionSelected('newTestament') }}><Text>New Testament</Text></TouchableOpacity>
             </View>
-            {books && books.map((book, index) => {
-                return (
+            {bookSelected ? (
+                <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
                     <TouchableOpacity
-                        key={index}
-                        onPress={() => {
-                            if (book === bookSelected) setBookSelected(null)
-                            else setBookSelected(book)
-                        }}
-                        style={{ marginBottom: 10, width: '100%', borderColor: 'blue', borderWidth: 1 }}
+                        onPress={() => setBookSelected(null)}
                     >
-                        <Text>{book}</Text>
-                        <View
-                            style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
-                        >
-                            {bookSelected === book && chapters && chapters.map(chapter => {
-                                return (
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            navigation.setParams({ book, chapter });
-                                            navigation.closeDrawer();
-                                            setBookSelected(null);
-                                        }}
-                                        style={{ marginHorizontal: 10, marginVertical: 10, width: 30, height: 30, borderWidth: 1, borderColor: 'grey' }}
-                                    >
-                                        <Text>{chapter}</Text>
-                                    </TouchableOpacity>
-                                )
-                            })}
-                        </View>
+                        <Text>{bookSelected}</Text>
                     </TouchableOpacity>
-                )
-            })}
+                    {chapters && chapters.map(chapter => {
+                        return (
+                            <TouchableOpacity
+                                onPress={() => {
+                                    navigation.setParams({ bookSelected, chapter });
+                                    navigation.closeDrawer();
+                                    setBookSelected(null);
+                                }}
+                                style={{ marginHorizontal: 10, marginVertical: 10, width: 30, height: 30, borderWidth: 1, borderColor: 'grey' }}
+                            >
+                                <Text>{chapter}</Text>
+                            </TouchableOpacity>
+                        )
+                    })}
+                    <TouchableOpacity onPress={() => {
+                        navigation.closeDrawer();
+                        setBookSelected(null);
+                    }}><Text>Return</Text></TouchableOpacity>
+                </View>) : (
+                    books && books.map(book => (
+                        <TouchableOpacity
+                            onPress={() => setBookSelected(book)}
+                            style={{ marginBottom: 10, width: '100%', borderColor: 'blue', borderWidth: 1 }}
+                        >
+                            <Text>{book}</Text>
+                        </TouchableOpacity>
+                    ))
+                )}
         </View>
     )
 };
