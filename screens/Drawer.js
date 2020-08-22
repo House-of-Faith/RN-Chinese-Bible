@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { ThemeProvider } from 'emotion-theming'
 import styled from '@emotion/native';
 import { AntDesign as Icon } from '@expo/vector-icons';
@@ -25,50 +25,52 @@ const Drawer = ({ navigation }) => {
 
     return (
         <ThemeProvider theme={{ color: 'blue' }}>
-            <View style={{ marginTop: 50, marginHorizontal: 20 }}>
-                <Header>
-                    <TitleContainer selected={sectionSelected === 'oldTestament'} onPress={() => { setBookSelected(null); setSectionSelected('oldTestament') }}><Title selected={sectionSelected === 'oldTestament'}>Old T.</Title></TitleContainer>
-                    <TitleContainer selected={sectionSelected === 'newTestament'} onPress={() => { setBookSelected(null); setSectionSelected('newTestament') }}><Title selected={sectionSelected === 'newTestament'}>New T.</Title></TitleContainer>
-                </Header>
-                {bookSelected ? (
-                    <BookSelected>
-                        <BookTitleContainer
-                            onPress={() => setBookSelected(null)}
-                        >
-                            <BookTitle>{bookSelected}</BookTitle>
-                            <Icon name="up" size={13} style={{ marginTop: 5 }} />
-                        </BookTitleContainer>
-                        {chapters && chapters.map(chapter => {
-                            return (
-                                <ChapterBox
-                                    onPress={() => {
-                                        navigation.setParams({ book: bookSelected, chapter });
-                                        navigation.closeDrawer();
-                                        setBookSelected(null);
-                                    }}
-                                >
-                                    <ChapterText>{chapter}</ChapterText>
-                                </ChapterBox>
-                            )
-                        })}
-                        <ReturnContainer onPress={() => {
-                            navigation.closeDrawer();
-                            setBookSelected(null);
-                        }}>
-                            <Icon name="left" size={14} color="grey" />
-                            <ReturnText>Return</ReturnText>
-                        </ReturnContainer>
-                    </BookSelected>) : (
-                        books && books.map(book => (
+            <SafeAreaView>
+                <ScrollView style={{ marginTop: 7, marginHorizontal: 20 }}>
+                    <Header>
+                        <TitleContainer selected={sectionSelected === 'oldTestament'} onPress={() => { setBookSelected(null); setSectionSelected('oldTestament') }}><Title selected={sectionSelected === 'oldTestament'}>Old T.</Title></TitleContainer>
+                        <TitleContainer selected={sectionSelected === 'newTestament'} onPress={() => { setBookSelected(null); setSectionSelected('newTestament') }}><Title selected={sectionSelected === 'newTestament'}>New T.</Title></TitleContainer>
+                    </Header>
+                    {bookSelected ? (
+                        <BookSelected>
                             <BookTitleContainer
-                                onPress={() => setBookSelected(book)}
+                                onPress={() => setBookSelected(null)}
                             >
-                                <BookTitle>{book}</BookTitle>
-                                <Icon name="down" size={13} style={{ marginTop: 5 }} />
+                                <BookTitle>{bookSelected}</BookTitle>
+                                <Icon name="up" size={13} style={{ marginTop: 5 }} />
                             </BookTitleContainer>
-                        ))
-                    )}
-            </View>
+                            {chapters && chapters.map(chapter => {
+                                return (
+                                    <ChapterBox
+                                        onPress={() => {
+                                            navigation.setParams({ book: bookSelected, chapter });
+                                            navigation.closeDrawer();
+                                            setBookSelected(null);
+                                        }}
+                                    >
+                                        <ChapterText>{chapter}</ChapterText>
+                                    </ChapterBox>
+                                )
+                            })}
+                            <ReturnContainer onPress={() => {
+                                navigation.closeDrawer();
+                                setBookSelected(null);
+                            }}>
+                                <Icon name="left" size={14} color="grey" />
+                                <ReturnText>Return</ReturnText>
+                            </ReturnContainer>
+                        </BookSelected>) : (
+                            books && books.map(book => (
+                                <BookTitleContainer
+                                    onPress={() => setBookSelected(book)}
+                                >
+                                    <BookTitle>{book}</BookTitle>
+                                    <Icon name="down" size={13} style={{ marginTop: 5 }} />
+                                </BookTitleContainer>
+                            ))
+                        )}
+                </ScrollView>
+            </SafeAreaView>
         </ThemeProvider>
     )
 };
