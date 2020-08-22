@@ -6,6 +6,9 @@ import * as MailComposer from 'expo-mail-composer';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { ThemeProvider } from 'emotion-theming'
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+import styled from '@emotion/native';
 import Main from './screens/Main';
 import Settings from './screens/Settings';
 import Drawer from './screens/Drawer';
@@ -58,37 +61,41 @@ const MainNavigator = ({ navigation }) => {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerLeft: () => <Button
-            title="="
-            onPress={() => {
-              navigation.toggleDrawer();
-            }}
-          />,
-          headerRight: () => (
-            <View>
-              <Button
-                title=":"
-                onPress={() => {
-                  setShowDropdown(!showDropdown);
-                }}
-              />
-              {showDropdown && <View style={{ position: 'absolute', top: 10, right: 15, height: 100, width: 100, borderWidth: 1, borderColor: 'blue', backgroundColor: 'white' }}>
-                <TouchableOpacity onPress={onShare}><Text>Share</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Settings')}><Text>Settings</Text></TouchableOpacity>
-                <TouchableOpacity onPress={onFeedback}><Text>Feedback</Text></TouchableOpacity>
-              </View>}
-            </View>),
-          headerTitle: `${book} ${chapter}`
-        }}
-      >
-        <Stack.Screen name="Main">
-          {props => <Main {...props} book={book} chapter={chapter} />}
-        </Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ThemeProvider theme={{ color: 'blue' }}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#333131',
+            },
+            headerLeft: () => <HeaderLeft onPress={() => navigation.toggleDrawer()}>
+              <Icon name="menu" size={22} color='#ffffff' /></HeaderLeft>,
+            headerRight: () => (
+              <View>
+                <HeaderRight
+                  onPress={() => {
+                    setShowDropdown(!showDropdown);
+                  }}
+                >
+                  <Icon name="dots-vertical" size={21} color='#ffffff' />
+                  {showDropdown && (
+                    <MenuContainer>
+                      <MenuItem onPress={onShare}><MenuText>Share</MenuText></MenuItem>
+                      <MenuItem onPress={() => navigation.navigate('Settings')}><MenuText>Settings</MenuText></MenuItem>
+                      <MenuItem onPress={onFeedback}><MenuText>Feedback</MenuText></MenuItem>
+                    </MenuContainer>
+                  )}
+                </HeaderRight>
+              </View>),
+            headerTitle: <Title>{`${book} ${chapter}`}</Title>
+          }}
+        >
+          <Stack.Screen name="Main">
+            {props => <Main {...props} book={book} chapter={chapter} />}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   )
 }
 
@@ -98,7 +105,7 @@ const drawerNavigator = createDrawerNavigator(
   },
   {
     initialRouteName: 'Main',
-    drawerWidth: '85%',
+    drawerWidth: '86%',
     contentComponent: Drawer,
   }
 );
@@ -111,3 +118,36 @@ const App = createAppContainer(
 );
 
 export default App;
+
+const HeaderLeft = styled.TouchableOpacity(({ theme }) => ({
+  marginLeft: 19
+}));
+
+const HeaderRight = styled.TouchableOpacity(({ theme }) => ({
+  paddingRight: 19
+}));
+
+const Title = styled.Text(({ theme }) => ({
+  fontSize: 22,
+  color: '#ffffff'
+}));
+
+const MenuContainer = styled.View(({ theme }) => ({
+  position: 'absolute',
+  top: -7,
+  right: 10,
+  height: 153,
+  width: 125,
+  backgroundColor: '#f1f1f1',
+  paddingLeft: 20,
+  paddingTop: 20
+}));
+
+const MenuItem = styled.TouchableOpacity(({ theme }) => ({
+  width: 88,
+  marginBottom: 20,
+}));
+
+const MenuText = styled.Text(({ theme }) => ({
+  fontSize: 20,
+}))

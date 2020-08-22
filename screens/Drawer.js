@@ -1,6 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { ThemeProvider } from 'emotion-theming'
+import styled from '@emotion/native';
+import { AntDesign as Icon } from '@expo/vector-icons';
 import bible from '../bible.json';
 
 const Drawer = ({ navigation }) => {
@@ -21,48 +24,127 @@ const Drawer = ({ navigation }) => {
     }, [bookSelected, sectionSelected]);
 
     return (
-        <View style={{ marginTop: 100, marginHorizontal: 15 }}>
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
-                <TouchableOpacity onPress={() => { setBookSelected(null); setSectionSelected('oldTestament') }}><Text>Old Testament</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => { setBookSelected(null); setSectionSelected('newTestament') }}><Text>New Testament</Text></TouchableOpacity>
-            </View>
-            {bookSelected ? (
-                <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-                    <TouchableOpacity
-                        onPress={() => setBookSelected(null)}
-                    >
-                        <Text>{bookSelected}</Text>
-                    </TouchableOpacity>
-                    {chapters && chapters.map(chapter => {
-                        return (
-                            <TouchableOpacity
-                                onPress={() => {
-                                    navigation.setParams({ bookSelected, chapter });
-                                    navigation.closeDrawer();
-                                    setBookSelected(null);
-                                }}
-                                style={{ marginHorizontal: 10, marginVertical: 10, width: 30, height: 30, borderWidth: 1, borderColor: 'grey' }}
-                            >
-                                <Text>{chapter}</Text>
-                            </TouchableOpacity>
-                        )
-                    })}
-                    <TouchableOpacity onPress={() => {
-                        navigation.closeDrawer();
-                        setBookSelected(null);
-                    }}><Text>Return</Text></TouchableOpacity>
-                </View>) : (
-                    books && books.map(book => (
-                        <TouchableOpacity
-                            onPress={() => setBookSelected(book)}
-                            style={{ marginBottom: 10, width: '100%', borderColor: 'blue', borderWidth: 1 }}
+        <ThemeProvider theme={{ color: 'blue' }}>
+            <View style={{ marginTop: 50, marginHorizontal: 20 }}>
+                <Header>
+                    <TitleContainer selected={sectionSelected === 'oldTestament'} onPress={() => { setBookSelected(null); setSectionSelected('oldTestament') }}><Title selected={sectionSelected === 'oldTestament'}>Old T.</Title></TitleContainer>
+                    <TitleContainer selected={sectionSelected === 'newTestament'} onPress={() => { setBookSelected(null); setSectionSelected('newTestament') }}><Title selected={sectionSelected === 'newTestament'}>New T.</Title></TitleContainer>
+                </Header>
+                {bookSelected ? (
+                    <BookSelected>
+                        <BookTitleContainer
+                            onPress={() => setBookSelected(null)}
                         >
-                            <Text>{book}</Text>
-                        </TouchableOpacity>
-                    ))
-                )}
-        </View>
+                            <BookTitle>{bookSelected}</BookTitle>
+                            <Icon name="up" size={13} style={{ marginTop: 5 }} />
+                        </BookTitleContainer>
+                        {chapters && chapters.map(chapter => {
+                            return (
+                                <ChapterBox
+                                    onPress={() => {
+                                        navigation.setParams({ book: bookSelected, chapter });
+                                        navigation.closeDrawer();
+                                        setBookSelected(null);
+                                    }}
+                                >
+                                    <ChapterText>{chapter}</ChapterText>
+                                </ChapterBox>
+                            )
+                        })}
+                        <ReturnContainer onPress={() => {
+                            navigation.closeDrawer();
+                            setBookSelected(null);
+                        }}>
+                            <Icon name="left" size={14} color="grey" />
+                            <ReturnText>Return</ReturnText>
+                        </ReturnContainer>
+                    </BookSelected>) : (
+                        books && books.map(book => (
+                            <BookTitleContainer
+                                onPress={() => setBookSelected(book)}
+                            >
+                                <BookTitle>{book}</BookTitle>
+                                <Icon name="down" size={13} style={{ marginTop: 5 }} />
+                            </BookTitleContainer>
+                        ))
+                    )}
+            </View>
+        </ThemeProvider>
     )
 };
 
 export default Drawer;
+
+const BookSelected = styled.View(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+}));
+
+const Header = styled.View(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 3,
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey',
+    paddingBottom: 10
+}));
+
+const TitleContainer = styled.TouchableOpacity(({ theme, selected }) => {
+    if (!selected) return {
+        borderBottomWidth: 1,
+        borderBottomColor: 'grey',
+    }
+}, ({
+    marginHorizontal: 7
+}));
+
+const Title = styled.Text(({ theme, selected }) => ({
+    color: selected ? 'black' : 'grey',
+    fontSize: 22,
+}));
+
+const BookTitleContainer = styled.TouchableOpacity(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 7,
+    marginVertical: 5,
+    width: '93%',
+}));
+
+const BookTitle = styled.Text(({ theme }) => ({
+    fontSize: 21
+}));
+
+const ChapterBox = styled.TouchableOpacity(({ theme }) => ({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+    marginVertical: 5,
+    width: 52,
+    height: 52,
+    backgroundColor: '#f1f1f1'
+}));
+
+const ChapterText = styled.Text(({ theme }) => ({
+    fontSize: 16
+}));
+
+const ReturnContainer = styled.TouchableOpacity(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginTop: 13,
+    width: '92%',
+}));
+
+const ReturnText = styled.Text(({ theme }) => ({
+    fontSize: 17,
+    color: 'grey',
+    marginLeft: 5
+}));
