@@ -1,75 +1,98 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, StyleSheet, Button } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { MaterialCommunityIcons as Icon, Ionicons as Icon2 } from '@expo/vector-icons';
+import styled from '@emotion/native';
 
 const Stack = createStackNavigator();
 
 const Settings = ({ navigation }) => {
+    const [theme, setTheme] = useState('light');
+    const [language, setLanguage] = useState('eng');
+
     return (
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{
-                    headerLeft: () => <Button
-                        title="<"
+                    headerLeft: () => <TouchableOpacity
                         onPress={() => {
                             navigation.navigate('Main');
                         }}
-                    />,
+                        style={{ marginLeft: 19 }}
+                    ><Icon name="arrow-left" size={24} color="#ffffff" /></TouchableOpacity>,
+                    headerStyle: {
+                        backgroundColor: '#333131',
+                    },
+                    headerTitle: <Title>Settings</Title>
                 }}
             >
                 <Stack.Screen name='Settings'>
-                    {() => <View style={styles.container}>
-                        <View style={styles.subContainer}>
-                            <Text style={styles.title}>THEME</Text>
-                            <TouchableOpacity><Text style={styles.option}>Light Theme</Text></TouchableOpacity>
-                            <TouchableOpacity><Text style={styles.option}>Dark Theme</Text></TouchableOpacity>
-                        </View>
-                        <View style={styles.subContainer}>
-                            <Text style={styles.title}>LANGUAGE</Text>
-                            <TouchableOpacity><Text style={styles.option}>Traditional Chinese</Text></TouchableOpacity>
-                            <TouchableOpacity><Text style={styles.option}>Simplified Chinese</Text></TouchableOpacity>
-                        </View>
-                        <View style={styles.subContainer}>
-                            <Text style={styles.title}>ADDITIONAL INFO</Text>
-                            <TouchableOpacity><Text style={styles.option}>About Us</Text></TouchableOpacity>
-                        </View>
-                    </View>}
+                    {() => (
+                        <Container>
+                            <SubContainer borderBottom>
+                                <SubTitle>THEME</SubTitle>
+                                <ButtonContainer><Button onPress={() => setTheme('light')}><Option>Light Theme</Option></Button>{theme === 'light' && <Icon2 name="md-checkmark-circle" size={20} color="black" />}</ButtonContainer>
+                                <ButtonContainer><Button><Option>Dark Theme</Option></Button>{theme === 'dark' && <Icon2 name="md-checkmark-circle" size={20} color="black" />}</ButtonContainer>
+                            </SubContainer>
+                            <SubContainer borderBottom>
+                                <SubTitle>LANGUAGE</SubTitle>
+                                <ButtonContainer><Button onPress={() => setLanguage('eng')}><Option>English</Option></Button>{language === 'eng' && <Icon2 name="md-checkmark-circle" size={20} color="black" />}</ButtonContainer>
+                                <ButtonContainer><Button><Option>Traditional Chinese</Option></Button>{language === 'trad' && <Icon2 name="md-checkmark-circle" size={20} color="black" />}</ButtonContainer>
+                                <ButtonContainer><Button><Option>Simplified Chinese</Option></Button>{language === 'simp' && <Icon2 name="md-checkmark-circle" size={20} color="black" />}</ButtonContainer>
+                            </SubContainer>
+                            <SubContainer>
+                                <SubTitle>ADDITIONAL INFO</SubTitle>
+                                <Button><Option>About Us</Option></Button>
+                            </SubContainer>
+                        </Container>
+                    )}
                 </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     )
 };
 
-Settings.navigationOptions = ({
-    navigation,
-}) => {
-    return {
-        headerLeft: () =>
-            <TouchableOpacity onPress={() => navigation.pop()}><Text>back</Text></TouchableOpacity>,
-        headerTitle: () =>
-            <View><Text>Settings</Text></View>,
-    };
-};
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 15,
-        marginLeft: 20
-    },
-    subContainer: {
-        borderBottomWidth: 1,
-        borderBottomColor: 'grey',
-    },
-    title: {
-        fontSize: 17,
-        fontWeight: 'bold'
-    },
-    option: {
-        marginLeft: 20
-    }
-});
-
 export default Settings;
+
+const Container = styled.View(({ theme }) => ({
+    backgroundColor: '#ffffff',
+    height: '100%',
+    paddingVertical: 32,
+    paddingHorizontal: 30
+}));
+
+const SubContainer = styled.View(({ theme, borderBottom }) => {
+    if (borderBottom) return {
+        borderBottomWidth: 1,
+        borderBottomColor: 'grey'
+    }
+}, ({
+    marginBottom: 20
+}));
+
+const SubTitle = styled.Text(({ theme }) => ({
+    fontSize: 17,
+    fontWeight: 'bold',
+    marginBottom: 20
+}));
+
+const ButtonContainer = styled.View(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'row',
+}));
+
+const Button = styled.TouchableOpacity(({ theme }) => ({
+    marginRight: 20
+}));
+
+const Option = styled.Text(({ theme }) => ({
+    fontSize: 19,
+    marginLeft: 20,
+    marginBottom: 20
+}));
+
+const Title = styled.Text(({ theme }) => ({
+    fontSize: 22,
+    color: '#ffffff'
+}));

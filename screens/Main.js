@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { StyleSheet, Text, SafeAreaView, ScrollView, Button } from 'react-native';
+import { SafeAreaView } from 'react-native';
+import styled from '@emotion/native';
 import Constants from 'expo-constants';
 import bible from '../bible.json';
 
@@ -10,29 +11,33 @@ const Main = ({ book, chapter }) => {
     const verses = bookObj[0].chapters.filter(obj => obj.chapter === chapter)[0].verses;
 
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
+        <SafeArea>
+            <Container>
+                <Spacer />
                 {verses.map(obj => {
                     return (
-                        <Text key={obj.verse} style={styles.text}>{obj.verse}: {obj.text}</Text>
+                        <Verse key={obj.verse}>{obj.verse} {obj.text}</Verse>
                     )
                 })}
-            </ScrollView>
-        </SafeAreaView>
+            </Container>
+        </SafeArea>
     )
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 15,
-    },
-    scrollView: {
-        marginHorizontal: 20,
-    },
-    text: {
-        marginVertical: 5
-    },
-});
-
 export default Main;
+
+const SafeArea = styled.SafeAreaView(({ theme }) => ({
+    backgroundColor: '#ffffff'
+}));
+
+const Container = styled.ScrollView(({ theme }) => ({
+    marginHorizontal: 32,
+}));
+
+const Verse = styled.Text(({ theme }) => ({
+    fontSize: 19,
+    lineHeight: 27,
+    marginBottom: 13
+}));
+
+const Spacer = styled.View({ height: 30 });
