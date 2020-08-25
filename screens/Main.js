@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useScrollToTop } from '@react-navigation/native';
 import styled from '@emotion/native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import bible from '../bible.json';
+import bible from 'translations/english.json';
 
 const Main = ({ book, chapter, swipeLeft, swipeRight }) => {
     const ref = useRef(null);
@@ -17,7 +17,7 @@ const Main = ({ book, chapter, swipeLeft, swipeRight }) => {
     };
 
     useEffect(() => {
-        if (ref && ref.current) ref.current.scrollTo({ y: 0 })
+        if (ref?.current) ref.current.scrollTo({ y: 0 })
     }, [book, chapter])
 
     return (

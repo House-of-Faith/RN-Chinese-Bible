@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-na
 import { ThemeProvider } from 'emotion-theming'
 import styled from '@emotion/native';
 import { AntDesign as Icon } from '@expo/vector-icons';
-import bible from '../bible.json';
+import bible from 'translations/english.json';
 
 const Drawer = ({ navigation }) => {
     const [sectionSelected, setSectionSelected] = useState('oldTestament');
@@ -39,7 +39,7 @@ const Drawer = ({ navigation }) => {
                                 <BookTitle>{bookSelected}</BookTitle>
                                 <Icon name="up" size={13} style={{ marginTop: 5 }} />
                             </BookTitleContainer>
-                            {chapters && chapters.map(chapter => {
+                            {chapters?.map(chapter => {
                                 return (
                                     <ChapterBox
                                         onPress={() => {
@@ -60,7 +60,7 @@ const Drawer = ({ navigation }) => {
                                 <ReturnText>Return</ReturnText>
                             </ReturnContainer>
                         </BookSelected>) : (
-                            books && books.map(book => (
+                            books?.map(book => (
                                 <BookTitleContainer
                                     onPress={() => setBookSelected(book)}
                                 >
