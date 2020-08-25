@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { View, Text, Button, TouchableOpacity, Share } from 'react-native';
+import { View, Share } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import * as MailComposer from 'expo-mail-composer';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -18,8 +18,12 @@ const Stack = createStackNavigator();
 
 const MainNavigator = ({ navigation }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const bibleJoined = [...bible.oldTestament, ...bible.newTestament];
   const book = navigation.state.params && navigation.state.params.book || bible.oldTestament[0].book;
   const chapter = navigation.state.params && navigation.state.params.chapter || '1';
+  const bookObj = bibleJoined.filter(obj => obj.book === book);
+  const chapterInt = parseInt(chapter);
+  const chapterLength = bookObj[0].chapters.length;
 
   const onShare = async () => {
     try {
@@ -60,6 +64,33 @@ const MainNavigator = ({ navigation }) => {
     }
   }
 
+  const swipeLeft = () => {
+    let newChapter;
+    if (chapterInt < chapterLength) {
+      newChapter = chapterInt + 1;
+      navigation.setParams({ chapter: newChapter.toString() });
+    } else {
+      if (book === 'Revelation') return;
+      const index = bibleJoined.findIndex((obj) => obj.book === book);
+      const newBook = bibleJoined[index + 1].book;
+      navigation.setParams({ book: newBook, chapter: '1' });
+    }
+  };
+
+  const swipeRight = () => {
+    let newChapter;
+    if (chapterInt > 1) {
+      newChapter = chapterInt - 1;
+      navigation.setParams({ chapter: newChapter.toString() });
+    } else {
+      if (book === 'Genesis') return;
+      const index = bibleJoined.findIndex((obj) => obj.book === book);
+      const newBook = bibleJoined[index - 1].book;
+      newChapter = chapterLength.toString();
+      navigation.setParams({ book: newBook, chapter: newChapter });
+    }
+  };
+
   return (
     <ThemeProvider theme={{ color: 'blue' }}>
       <NavigationContainer>
@@ -91,7 +122,7 @@ const MainNavigator = ({ navigation }) => {
           }}
         >
           <Stack.Screen name="Main">
-            {props => <Main {...props} book={book} chapter={chapter} />}
+            {props => <Main {...props} book={book} chapter={chapter} swipeLeft={swipeLeft} swipeRight={swipeRight} />}
           </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
