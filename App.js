@@ -9,18 +9,18 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeProvider } from 'emotion-theming'
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import styled from '@emotion/native';
-import Main from './screens/Main';
-import Settings from './screens/Settings';
-import Drawer from './screens/Drawer';
-import bible from './bible.json';
+import Main from 'screens/Main';
+import Settings from 'screens/Settings';
+import Drawer from 'screens/Drawer';
+import bible from 'translations/english.json';
 
 const Stack = createStackNavigator();
 
 const MainNavigator = ({ navigation }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const bibleJoined = [...bible.oldTestament, ...bible.newTestament];
-  const book = navigation.state.params && navigation.state.params.book || bible.oldTestament[0].book;
-  const chapter = navigation.state.params && navigation.state.params.chapter || '1';
+  const book = navigation.state.params?.book || bible.oldTestament[0].book;
+  const chapter = navigation.state.params?.chapter || '1';
   const bookObj = bibleJoined.filter(obj => obj.book === book);
   const chapterInt = parseInt(chapter);
   const chapterLength = bookObj[0].chapters.length;
