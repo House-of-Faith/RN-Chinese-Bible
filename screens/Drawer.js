@@ -104,6 +104,7 @@ const Drawer = ({ navigation }) => {
                     ) : (
                         books?.map((book) => (
                             <BookTitleContainer
+                                key={book}
                                 onPress={() => setBookSelected(book)}
                             >
                                 <BookTitle>{book}</BookTitle>
