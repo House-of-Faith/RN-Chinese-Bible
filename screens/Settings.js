@@ -13,7 +13,6 @@ import styled from "@emotion/native";
 const Stack = createStackNavigator();
 
 const Settings = ({ navigation, theme }) => {
-    console.log({ theme });
     const dispatch = useDispatch();
     const { background, text } = useTheme();
     const [language, setLanguage] = useState("eng");
