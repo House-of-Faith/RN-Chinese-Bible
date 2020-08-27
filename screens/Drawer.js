@@ -6,12 +6,14 @@ import {
     ScrollView,
     SafeAreaView,
 } from "react-native";
-import { ThemeProvider } from "emotion-theming";
+import { useTheme } from "emotion-theming";
 import styled from "@emotion/native";
 import { AntDesign as Icon } from "@expo/vector-icons";
 import bible from "translations/english.json";
+import theme from "../theme";
 
 const Drawer = ({ navigation }) => {
+    const { background, text } = useTheme();
     const [sectionSelected, setSectionSelected] = useState("oldTestament");
     const [bookSelected, setBookSelected] = useState(null);
     const [chapters, setChapters] = useState(null);
@@ -31,94 +33,101 @@ const Drawer = ({ navigation }) => {
     }, [bookSelected, sectionSelected]);
 
     return (
-        <ThemeProvider theme={{ color: "blue" }}>
-            <SafeAreaView>
-                <ScrollView style={{ marginTop: 7, marginHorizontal: 20 }}>
-                    <Header>
-                        <TitleContainer
-                            selected={sectionSelected === "oldTestament"}
+        <SafeAreaView
+            style={{ height: "100%", backgroundColor: background.menu }}
+        >
+            <ScrollView
+                style={{
+                    marginTop: 7,
+                    marginHorizontal: 20,
+                }}
+            >
+                <Header>
+                    <TitleContainer
+                        selected={sectionSelected === "oldTestament"}
+                        onPress={() => {
+                            setBookSelected(null);
+                            setSectionSelected("oldTestament");
+                        }}
+                    >
+                        <Title selected={sectionSelected === "oldTestament"}>
+                            Old T.
+                        </Title>
+                    </TitleContainer>
+                    <TitleContainer
+                        selected={sectionSelected === "newTestament"}
+                        onPress={() => {
+                            setBookSelected(null);
+                            setSectionSelected("newTestament");
+                        }}
+                    >
+                        <Title selected={sectionSelected === "newTestament"}>
+                            New T.
+                        </Title>
+                    </TitleContainer>
+                </Header>
+                {bookSelected ? (
+                    <BookSelected>
+                        <BookTitleContainer
+                            onPress={() => setBookSelected(null)}
+                        >
+                            <BookTitle>{bookSelected}</BookTitle>
+                            <Icon
+                                name="up"
+                                size={13}
+                                style={{ marginTop: 5 }}
+                                color={text.reading}
+                            />
+                        </BookTitleContainer>
+                        {chapters?.map((chapter) => {
+                            return (
+                                <ChapterBox
+                                    key={chapter}
+                                    onPress={() => {
+                                        navigation.setParams({
+                                            book: bookSelected,
+                                            chapter,
+                                        });
+                                        navigation.closeDrawer();
+                                        setBookSelected(null);
+                                    }}
+                                >
+                                    <ChapterText>{chapter}</ChapterText>
+                                </ChapterBox>
+                            );
+                        })}
+                        <ReturnContainer
                             onPress={() => {
+                                navigation.closeDrawer();
                                 setBookSelected(null);
-                                setSectionSelected("oldTestament");
                             }}
                         >
-                            <Title
-                                selected={sectionSelected === "oldTestament"}
-                            >
-                                Old T.
-                            </Title>
-                        </TitleContainer>
-                        <TitleContainer
-                            selected={sectionSelected === "newTestament"}
-                            onPress={() => {
-                                setBookSelected(null);
-                                setSectionSelected("newTestament");
-                            }}
+                            <Icon
+                                name="left"
+                                size={14}
+                                color={text.secondary}
+                            />
+                            <ReturnText>Return</ReturnText>
+                        </ReturnContainer>
+                    </BookSelected>
+                ) : (
+                    books?.map((book) => (
+                        <BookTitleContainer
+                            key={book}
+                            onPress={() => setBookSelected(book)}
                         >
-                            <Title
-                                selected={sectionSelected === "newTestament"}
-                            >
-                                New T.
-                            </Title>
-                        </TitleContainer>
-                    </Header>
-                    {bookSelected ? (
-                        <BookSelected>
-                            <BookTitleContainer
-                                onPress={() => setBookSelected(null)}
-                            >
-                                <BookTitle>{bookSelected}</BookTitle>
-                                <Icon
-                                    name="up"
-                                    size={13}
-                                    style={{ marginTop: 5 }}
-                                />
-                            </BookTitleContainer>
-                            {chapters?.map((chapter) => {
-                                return (
-                                    <ChapterBox
-                                        key={chapter}
-                                        onPress={() => {
-                                            navigation.setParams({
-                                                book: bookSelected,
-                                                chapter,
-                                            });
-                                            navigation.closeDrawer();
-                                            setBookSelected(null);
-                                        }}
-                                    >
-                                        <ChapterText>{chapter}</ChapterText>
-                                    </ChapterBox>
-                                );
-                            })}
-                            <ReturnContainer
-                                onPress={() => {
-                                    navigation.closeDrawer();
-                                    setBookSelected(null);
-                                }}
-                            >
-                                <Icon name="left" size={14} color="grey" />
-                                <ReturnText>Return</ReturnText>
-                            </ReturnContainer>
-                        </BookSelected>
-                    ) : (
-                        books?.map((book) => (
-                            <BookTitleContainer
-                                key={book}
-                                onPress={() => setBookSelected(book)}
-                            >
-                                <BookTitle>{book}</BookTitle>
-                                <Icon
-                                    name="down"
-                                    size={13}
-                                    style={{ marginTop: 5 }}
-                                />
-                            </BookTitleContainer>
-                        ))
-                    )}
-                </ScrollView>
-            </SafeAreaView>
-        </ThemeProvider>
+                            <BookTitle>{book}</BookTitle>
+                            <Icon
+                                name="down"
+                                size={13}
+                                style={{ marginTop: 5 }}
+                                color={text.reading}
+                            />
+                        </BookTitleContainer>
+                    ))
+                )}
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 
@@ -136,7 +145,7 @@ const Header = styled.View(({ theme }) => ({
     justifyContent: "space-between",
     marginBottom: 3,
     borderBottomWidth: 1,
-    borderBottomColor: "grey",
+    borderBottomColor: theme.border.color,
     paddingBottom: 10,
 }));
 
@@ -145,7 +154,7 @@ const TitleContainer = styled.TouchableOpacity(
         if (!selected)
             return {
                 borderBottomWidth: 1,
-                borderBottomColor: "grey",
+                borderBottomColor: theme.border.color,
             };
     },
     {
@@ -154,7 +163,7 @@ const TitleContainer = styled.TouchableOpacity(
 );
 
 const Title = styled.Text(({ theme, selected }) => ({
-    color: selected ? "black" : "grey",
+    color: selected ? theme.text.card : theme.text.secondary,
     fontSize: 22,
 }));
 
@@ -169,6 +178,7 @@ const BookTitleContainer = styled.TouchableOpacity(({ theme }) => ({
 
 const BookTitle = styled.Text(({ theme }) => ({
     fontSize: 21,
+    color: theme.text.card,
 }));
 
 const ChapterBox = styled.TouchableOpacity(({ theme }) => ({
@@ -179,11 +189,12 @@ const ChapterBox = styled.TouchableOpacity(({ theme }) => ({
     marginVertical: 5,
     width: 52,
     height: 52,
-    backgroundColor: "#f1f1f1",
+    backgroundColor: theme.background.card,
 }));
 
 const ChapterText = styled.Text(({ theme }) => ({
     fontSize: 16,
+    color: theme.text.card,
 }));
 
 const ReturnContainer = styled.TouchableOpacity(({ theme }) => ({
@@ -198,6 +209,6 @@ const ReturnContainer = styled.TouchableOpacity(({ theme }) => ({
 
 const ReturnText = styled.Text(({ theme }) => ({
     fontSize: 17,
-    color: "grey",
+    color: theme.text.secondary,
     marginLeft: 5,
 }));
