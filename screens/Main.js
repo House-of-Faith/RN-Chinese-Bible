@@ -1,16 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useScrollToTop } from "@react-navigation/native";
+import React, { useEffect, useRef } from "react";
 import styled from "@emotion/native";
 import GestureRecognizer from "react-native-swipe-gestures";
-import bible from "translations/english.json";
 
-const Main = ({ book, chapter, swipeLeft, swipeRight }) => {
+const Main = ({ verses, swipeLeft, swipeRight }) => {
     const ref = useRef(null);
-    const bibleJoined = [...bible.oldTestament, ...bible.newTestament];
-    const bookObj = bibleJoined.filter((obj) => obj.book === book);
-    const verses = bookObj[0].chapters.filter(
-        (obj) => obj.chapter === chapter
-    )[0].verses;
 
     const config = {
         velocityThreshold: 0.3,
@@ -19,7 +12,7 @@ const Main = ({ book, chapter, swipeLeft, swipeRight }) => {
 
     useEffect(() => {
         if (ref?.current) ref.current.scrollTo({ y: 0 });
-    }, [book, chapter]);
+    }, [verses]);
 
     return (
         <SafeArea>
@@ -30,10 +23,10 @@ const Main = ({ book, chapter, swipeLeft, swipeRight }) => {
                     config={config}
                 >
                     <Spacer />
-                    {verses.map((obj) => {
+                    {verses?.map((verse, i) => {
                         return (
-                            <Verse key={obj.verse}>
-                                {obj.verse} {obj.text}
+                            <Verse key={i}>
+                                {i + 1} {verse}
                             </Verse>
                         );
                     })}
@@ -50,7 +43,7 @@ const SafeArea = styled.SafeAreaView(({ theme }) => ({
 }));
 
 const Container = styled.ScrollView(({ theme }) => ({
-    marginHorizontal: 32,
+    paddingHorizontal: 32,
 }));
 
 const Verse = styled.Text(({ theme }) => ({

@@ -1,36 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useDispatch } from 'react-redux';
 import {
-    View,
-    Text,
-    TouchableOpacity,
     ScrollView,
     SafeAreaView,
 } from "react-native";
 import { useTheme } from "emotion-theming";
 import styled from "@emotion/native";
 import { AntDesign as Icon } from "@expo/vector-icons";
-import bible from "translations/english.json";
-import theme from "../theme";
+
+import { useBible } from 'lib/hooks';
 
 const Drawer = ({ navigation }) => {
+    const dispatch = useDispatch()
     const { background, text } = useTheme();
-    const [sectionSelected, setSectionSelected] = useState("oldTestament");
-    const [bookSelected, setBookSelected] = useState(null);
-    const [chapters, setChapters] = useState(null);
-    const books = bible[sectionSelected].map((obj) => obj.book);
-
-    useEffect(() => {
-        if (bookSelected) {
-            const bookObj = bible[sectionSelected].filter(
-                (obj) => obj.book === bookSelected
-            );
-            if (bookObj.length < 1) setChapters(null);
-            else {
-                const chapters = bookObj[0].chapters.map((obj) => obj.chapter);
-                setChapters(chapters);
-            }
-        }
-    }, [bookSelected, sectionSelected]);
+    const {
+      testament, // old/new
+      setTestament,
+      book, // index
+      books, // array of book names
+      setBook,
+      chapters, // integer
+    } = useBible({ book: null, chapter: null });
 
     return (
         <SafeAreaView
@@ -44,34 +34,34 @@ const Drawer = ({ navigation }) => {
             >
                 <Header>
                     <TitleContainer
-                        selected={sectionSelected === "oldTestament"}
+                        selected={testament === "old"}
                         onPress={() => {
-                            setBookSelected(null);
-                            setSectionSelected("oldTestament");
+                            setBook(null);
+                            setTestament("old");
                         }}
                     >
-                        <Title selected={sectionSelected === "oldTestament"}>
+                        <Title selected={testament === "old"}>
                             Old T.
                         </Title>
                     </TitleContainer>
                     <TitleContainer
-                        selected={sectionSelected === "newTestament"}
+                        selected={testament === "new"}
                         onPress={() => {
-                            setBookSelected(null);
-                            setSectionSelected("newTestament");
+                            setBook(null);
+                            setTestament("new");
                         }}
                     >
-                        <Title selected={sectionSelected === "newTestament"}>
+                        <Title selected={testament === "new"}>
                             New T.
                         </Title>
                     </TitleContainer>
                 </Header>
-                {bookSelected ? (
+                {book !== null ? (
                     <BookSelected>
                         <BookTitleContainer
-                            onPress={() => setBookSelected(null)}
+                            onPress={() => setBook(null)}
                         >
-                            <BookTitle>{bookSelected}</BookTitle>
+                            <BookTitle>{books[book]}</BookTitle>
                             <Icon
                                 name="up"
                                 size={13}
@@ -79,27 +69,27 @@ const Drawer = ({ navigation }) => {
                                 color={text.reading}
                             />
                         </BookTitleContainer>
-                        {chapters?.map((chapter) => {
+                        {[...Array(chapters)]?.map((x, i) => {
                             return (
                                 <ChapterBox
-                                    key={chapter}
+                                    key={i}
                                     onPress={() => {
-                                        navigation.setParams({
-                                            book: bookSelected,
-                                            chapter,
-                                        });
+                                        dispatch({
+                                          type: "SET_CURRENT_SCRIPTURE",
+                                          payload: { testament, book, chapter: i },
+                                        })
                                         navigation.closeDrawer();
-                                        setBookSelected(null);
+                                        // setBook(null);
                                     }}
                                 >
-                                    <ChapterText>{chapter}</ChapterText>
+                                    <ChapterText>{i + 1}</ChapterText>
                                 </ChapterBox>
                             );
                         })}
                         <ReturnContainer
                             onPress={() => {
                                 navigation.closeDrawer();
-                                setBookSelected(null);
+                                setBook(null);
                             }}
                         >
                             <Icon
@@ -111,10 +101,10 @@ const Drawer = ({ navigation }) => {
                         </ReturnContainer>
                     </BookSelected>
                 ) : (
-                    books?.map((book) => (
+                    books?.map((book, i) => (
                         <BookTitleContainer
                             key={book}
-                            onPress={() => setBookSelected(book)}
+                            onPress={() => setBook(i)}
                         >
                             <BookTitle>{book}</BookTitle>
                             <Icon

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import { View, Share } from "react-native";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import * as MailComposer from "expo-mail-composer";
@@ -8,23 +9,63 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useTheme } from "emotion-theming";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import styled from "@emotion/native";
+
 import Main from "screens/Main";
 import Settings from "screens/Settings";
 import Drawer from "screens/Drawer";
-import bible from "translations/english.json";
-import theme from "./theme";
+import { useBible, useIsMounted } from 'lib/hooks';
+import selectors from "store/selectors";
 
 const Stack = createStackNavigator();
 
 const MainNavigator = ({ navigation }) => {
+    const isMounted = useIsMounted();
+    const dispatch = useDispatch()
     const { background, text } = useTheme();
     const [showDropdown, setShowDropdown] = useState(false);
-    const bibleJoined = [...bible.oldTestament, ...bible.newTestament];
-    const book = navigation.state.params?.book || bible.oldTestament[0].book;
-    const chapter = navigation.state.params?.chapter || "1";
-    const bookObj = bibleJoined.filter((obj) => obj.book === book);
-    const chapterInt = parseInt(chapter);
-    const chapterLength = bookObj[0].chapters.length;
+    const {
+      testament: testGlobal,
+      book: bookGlobal,
+      chapter: chapterGlobal,
+    } = useSelector(selectors.currentScripture);
+
+    const {
+      testament, // old/new
+      setTestament,
+      book, // index
+      books, // array of book names
+      setBook,
+      chapter, // index
+      setChapter,
+      verses, // array of verses
+      nextChapter,
+      prevChapter,
+    } = useBible({ testament: testGlobal, book: bookGlobal, chapter: chapterGlobal });
+
+    useEffect(() => {
+      if (testament === testGlobal) return;
+      setTestament(testGlobal)
+    }, [testGlobal])
+    
+    useEffect(() => {
+      if (book === bookGlobal) return;
+      setBook(bookGlobal)
+    }, [bookGlobal])
+
+    useEffect(() => {
+      if (chapter === chapterGlobal) return;
+      setChapter(chapterGlobal)
+    }, [chapterGlobal])
+
+    useEffect(() => {
+      if (!isMounted) return
+      setCurrentScripture({ testament, book, chapter })
+    }, [testament, book, chapter])
+
+    function setCurrentScripture({ testament = testament, book = book, chapter = chapter}) {
+      dispatch({ type: "SET_CURRENT_SCRIPTURE", payload: { testament, book, chapter }})
+    }
+
 
     const onShare = async () => {
         try {
@@ -61,33 +102,6 @@ const MainNavigator = ({ navigation }) => {
             }
         } catch (error) {
             alert(error.message);
-        }
-    };
-
-    const swipeLeft = () => {
-        let newChapter;
-        if (chapterInt < chapterLength) {
-            newChapter = chapterInt + 1;
-            navigation.setParams({ chapter: newChapter.toString() });
-        } else {
-            if (book === "Revelation") return;
-            const index = bibleJoined.findIndex((obj) => obj.book === book);
-            const newBook = bibleJoined[index + 1].book;
-            navigation.setParams({ book: newBook, chapter: "1" });
-        }
-    };
-
-    const swipeRight = () => {
-        let newChapter;
-        if (chapterInt > 1) {
-            newChapter = chapterInt - 1;
-            navigation.setParams({ chapter: newChapter.toString() });
-        } else {
-            if (book === "Genesis") return;
-            const index = bibleJoined.findIndex((obj) => obj.book === book);
-            const newBook = bibleJoined[index - 1].book;
-            newChapter = chapterLength.toString();
-            navigation.setParams({ book: newBook, chapter: newChapter });
         }
     };
 
@@ -135,17 +149,16 @@ const MainNavigator = ({ navigation }) => {
                             </HeaderRight>
                         </View>
                     ),
-                    headerTitle: <Title>{`${book} ${chapter}`}</Title>,
+                    headerTitle: <Title>{`${books[book]} ${chapter + 1}`}</Title>,
                 }}
             >
                 <Stack.Screen name="Main">
                     {(props) => (
                         <Main
                             {...props}
-                            book={book}
-                            chapter={chapter}
-                            swipeLeft={swipeLeft}
-                            swipeRight={swipeRight}
+                            verses={verses}
+                            swipeLeft={nextChapter}
+                            swipeRight={prevChapter}
                         />
                     )}
                 </Stack.Screen>

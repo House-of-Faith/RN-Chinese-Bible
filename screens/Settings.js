@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect, useDispatch } from "react-redux";
 import { useTheme } from "emotion-theming";
@@ -12,10 +12,12 @@ import styled from "@emotion/native";
 
 const Stack = createStackNavigator();
 
-const Settings = ({ navigation, theme }) => {
+const Settings = ({ navigation, theme, language }) => {
     const dispatch = useDispatch();
     const { background, text } = useTheme();
-    const [language, setLanguage] = useState("eng");
+    function setLanguage(lang) {
+      dispatch({ type: "SET_LANGUAGE", payload: lang });
+    }
 
     return (
         <NavigationContainer>
@@ -86,11 +88,11 @@ const Settings = ({ navigation, theme }) => {
                                     <SubTitle>LANGUAGE</SubTitle>
                                     <ButtonContainer>
                                         <Button
-                                            onPress={() => setLanguage("eng")}
+                                            onPress={() => setLanguage("english")}
                                         >
                                             <Option>English</Option>
                                         </Button>
-                                        {language === "eng" && (
+                                        {language === "english" && (
                                             <Icon2
                                                 name="md-checkmark-circle"
                                                 size={20}
@@ -99,10 +101,10 @@ const Settings = ({ navigation, theme }) => {
                                         )}
                                     </ButtonContainer>
                                     <ButtonContainer>
-                                        <Button>
+                                        <Button onPress={() => setLanguage("traditional")}>
                                             <Option>Traditional Chinese</Option>
                                         </Button>
-                                        {language === "trad" && (
+                                        {language === "traditional" && (
                                             <Icon2
                                                 name="md-checkmark-circle"
                                                 size={20}
@@ -111,10 +113,10 @@ const Settings = ({ navigation, theme }) => {
                                         )}
                                     </ButtonContainer>
                                     <ButtonContainer>
-                                        <Button>
+                                        <Button onPress={() => setLanguage("simplified")}>
                                             <Option>Simplified Chinese</Option>
                                         </Button>
-                                        {language === "simp" && (
+                                        {language === "simplified" && (
                                             <Icon2
                                                 name="md-checkmark-circle"
                                                 size={20}
@@ -138,8 +140,9 @@ const Settings = ({ navigation, theme }) => {
     );
 };
 
-const mapStateToProps = ({ theme }) => ({
+const mapStateToProps = ({ theme, language }) => ({
     theme,
+    language,
 });
 
 export default connect(mapStateToProps, {})(Settings);
