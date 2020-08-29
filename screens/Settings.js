@@ -37,6 +37,7 @@ const Settings = ({ navigation, theme }) => {
                     ),
                     headerStyle: {
                         backgroundColor: background.navbar,
+                        shadowColor: "transparent",
                     },
                     headerTitle: <Title>Settings</Title>,
                 }}

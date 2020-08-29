@@ -97,6 +97,7 @@ const MainNavigator = ({ navigation }) => {
                 screenOptions={{
                     headerStyle: {
                         backgroundColor: background.navbar,
+                        shadowColor: "transparent",
                     },
                     headerLeft: () => (
                         <HeaderLeft onPress={() => navigation.toggleDrawer()}>
