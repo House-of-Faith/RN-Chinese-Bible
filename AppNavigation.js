@@ -40,11 +40,7 @@ const MainNavigator = ({ navigation }) => {
       verses, // array of verses
       nextChapter,
       prevChapter,
-    } = useBible({ testament: 'old', book: bookGlobal, chapter: chapterGlobal });
-
-    console.log('book: ', book, bookGlobal)
-    console.log('chapter: ', chapter, chapterGlobal)
-    console.log(`${books[book]} ${chapter + 1} ${verses?.[0]}`)
+    } = useBible({ testament: testGlobal, book: bookGlobal, chapter: chapterGlobal });
 
     useEffect(() => {
       if (testament === testGlobal) return;
@@ -70,7 +66,6 @@ const MainNavigator = ({ navigation }) => {
       dispatch({ type: "SET_CURRENT_SCRIPTURE", payload: { testament, book, chapter }})
     }
 
-    // console.log({ testament, book, chapter })
 
     const onShare = async () => {
         try {

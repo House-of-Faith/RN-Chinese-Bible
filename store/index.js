@@ -49,15 +49,19 @@ function setLanguage(state, payload) {
 }
 
 function setCurrentScripture(state, payload) {
-  const oldScripture = state.currentScripture;
-  const newScripture = payload;
-  if (isEqual(oldScripture, newScripture)) return { state };
   const testament = payload?.testament;
   const book = payload?.book;
-  const chapter = payload?.chapter;
+	const chapter = payload?.chapter;
+	
   const isValid = ['old', 'new'].includes(testament)
     && typeof book === 'number'
-    && typeof chapter === 'number';
-  if (isValid) return { ...state, currentScripture: { testament, book, chapter } };
-  return { state }
+		&& typeof chapter === 'number';
+	
+	const oldScripture = state.currentScripture;
+  const newScripture = payload;
+	
+	if (isEqual(oldScripture, newScripture)) return { ...state };
+	if (!isValid) return { ...state }
+	
+	return { ...state, currentScripture: newScripture };
 }
