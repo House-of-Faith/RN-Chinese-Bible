@@ -14,7 +14,7 @@ import Main from "screens/Main";
 import Settings from "screens/Settings";
 import Drawer from "screens/Drawer";
 import { useBible, useIsMounted } from 'lib/hooks';
-import selectors from "store/selectors";
+import { selectors } from "store";
 
 const Stack = createStackNavigator();
 

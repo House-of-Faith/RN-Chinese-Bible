@@ -1,7 +1,9 @@
 import React from "react";
 import { Provider } from "react-redux";
-import store from "./store/index";
-import AppTheme from "./AppTheme";
+import { registerRootComponent } from 'expo';
+
+import store from "store";
+import AppTheme from "theme/AppTheme";
 
 const App = () => {
     return (
@@ -11,4 +13,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default registerRootComponent(App);

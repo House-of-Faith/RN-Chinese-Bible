@@ -5,7 +5,7 @@ import english from 'assets/translations/english.json';
 import traditional from 'assets/translations/traditional.json';
 import simplified from 'assets/translations/simplified.json';
 
-import selectors from 'store/selectors'
+import { selectors } from 'store'
 
 const languages = {
   english,

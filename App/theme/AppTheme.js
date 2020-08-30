@@ -2,13 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { ThemeProvider } from "emotion-theming";
 
-import theme from "theme";
-import AppNavigation from "AppNavigation";
-import selectors from "store/selectors";
+import themes from "theme/themes";
+import AppNavigation from "navigation/AppNavigation";
+import { selectors } from "store";
 
 const AppTheme = () => {
     const themeType = useSelector(selectors.theme);
-    const selectedTheme = theme[themeType];
+    const selectedTheme = themes[themeType];
     
 
     return (
