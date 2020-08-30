@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { ThemeProvider } from "emotion-theming";
 
 import themes from "theme/themes";
-import AppNavigation from "navigation/AppNavigation";
+import RootNavigation from "navigation/RootNavigation";
 import { selectors } from "store";
 
 const AppTheme = () => {
@@ -13,7 +13,7 @@ const AppTheme = () => {
 
     return (
         <ThemeProvider theme={selectedTheme}>
-            <AppNavigation />
+            <RootNavigation />
         </ThemeProvider>
     );
 };

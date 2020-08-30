@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { View, Share } from "react-native";
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import * as MailComposer from "expo-mail-composer";
-import { createDrawerNavigator } from "react-navigation-drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useTheme } from "emotion-theming";
@@ -11,14 +9,12 @@ import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import styled from "@emotion/native";
 
 import Main from "screens/Main";
-import Settings from "screens/Settings";
-import Drawer from "screens/Drawer";
 import { useBible, useIsMounted } from 'lib/hooks';
 import { selectors } from "store";
 
 const Stack = createStackNavigator();
 
-const MainNavigator = ({ navigation }) => {
+export default function MainNavigator({ navigation }) {
     const isMounted = useIsMounted();
     const dispatch = useDispatch()
     const { background, text } = useTheme();
@@ -168,58 +164,36 @@ const MainNavigator = ({ navigation }) => {
     );
 };
 
-const drawerNavigator = createDrawerNavigator(
-    {
-        Main: MainNavigator,
-    },
-    {
-        initialRouteName: "Main",
-        drawerWidth: "86%",
-        contentComponent: Drawer,
-    }
-);
-
-const App = createAppContainer(
-    createSwitchNavigator({
-        Main: drawerNavigator,
-        Settings: Settings,
-    })
-);
-
-const AppNavigation = createAppContainer(App);
-
-export default AppNavigation;
-
 const HeaderLeft = styled.TouchableOpacity(({ theme }) => ({
-    marginLeft: 19,
+	marginLeft: 19,
 }));
 
 const HeaderRight = styled.TouchableOpacity(({ theme }) => ({
-    paddingRight: 19,
+	paddingRight: 19,
 }));
 
 const Title = styled.Text(({ theme }) => ({
-    fontSize: 22,
-    color: "#ffffff",
+	fontSize: 22,
+	color: "#ffffff",
 }));
 
 const MenuContainer = styled.View(({ theme }) => ({
-    position: "absolute",
-    top: -7,
-    right: 10,
-    height: 153,
-    width: 125,
-    backgroundColor: theme.background.menu,
-    paddingLeft: 20,
-    paddingTop: 20,
+	position: "absolute",
+	top: -7,
+	right: 10,
+	height: 153,
+	width: 125,
+	backgroundColor: theme.background.menu,
+	paddingLeft: 20,
+	paddingTop: 20,
 }));
 
 const MenuItem = styled.TouchableOpacity(({ theme }) => ({
-    width: 88,
-    marginBottom: 20,
+	width: 88,
+	marginBottom: 20,
 }));
 
 const MenuText = styled.Text(({ theme }) => ({
-    fontSize: 20,
-    color: theme.text.menu,
+	fontSize: 20,
+	color: theme.text.menu,
 }));
