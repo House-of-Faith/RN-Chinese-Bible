@@ -1,10 +1,57 @@
 import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import styled from "@emotion/native";
 import GestureRecognizer from "react-native-swipe-gestures";
 
-const Main = ({ verses, swipeLeft, swipeRight }) => {
+import { selectors } from 'store';
+import { useBible, useIsMounted } from 'lib/hooks';
+
+export default function Main() {
     const ref = useRef(null);
 
+		const isMounted = useIsMounted();
+    const dispatch = useDispatch()
+    const {
+      testament: testGlobal,
+      book: bookGlobal,
+      chapter: chapterGlobal,
+    } = useSelector(selectors.currentScripture);
+    const {
+      testament, // old/new
+      setTestament,
+      book, // index
+      setBook,
+      chapter, // index
+      setChapter,
+      verses, // array of verses
+      nextChapter,
+			prevChapter,
+    } = useBible({ testament: testGlobal, book: bookGlobal, chapter: chapterGlobal });
+
+    useEffect(() => {
+      if (testament === testGlobal) return;
+      setTestament(testGlobal)
+    }, [testGlobal])
+    
+    useEffect(() => {
+      if (book === bookGlobal) return;
+      setBook(bookGlobal)
+    }, [bookGlobal])
+
+    useEffect(() => {
+      if (chapter === chapterGlobal) return;
+      setChapter(chapterGlobal)
+    }, [chapterGlobal])
+
+    useEffect(() => {
+      if (!isMounted) return
+      setCurrentScripture({ testament, book, chapter })
+    }, [testament, book, chapter])
+
+    function setCurrentScripture({ testament = testament, book = book, chapter = chapter}) {
+      dispatch({ type: "SET_CURRENT_SCRIPTURE", payload: { testament, book, chapter }})
+		}
+		
     const config = {
         velocityThreshold: 0.3,
         directionalOffsetThreshold: 100,
@@ -18,8 +65,8 @@ const Main = ({ verses, swipeLeft, swipeRight }) => {
         <SafeArea>
             <Container ref={ref}>
                 <GestureRecognizer
-                    onSwipeLeft={swipeLeft}
-                    onSwipeRight={swipeRight}
+                    onSwipeLeft={nextChapter}
+                    onSwipeRight={prevChapter}
                     config={config}
                 >
                     <Spacer />
@@ -35,8 +82,6 @@ const Main = ({ verses, swipeLeft, swipeRight }) => {
         </SafeArea>
     );
 };
-
-export default Main;
 
 const SafeArea = styled.SafeAreaView(({ theme }) => ({
     backgroundColor: theme.background.reading,
