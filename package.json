@@ -37,7 +37,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
-    "babel-preset-expo": "~8.1.0"
+    "@testing-library/react-native": "^7.0.2",
+    "babel-preset-expo": "~8.1.0",
+    "expo-cli": "^3.25.1"
   },
   "private": true
 }
