@@ -8,9 +8,8 @@ import { useBible, useIsMounted } from 'lib/hooks';
 
 export default function Main() {
     const ref = useRef(null);
-
 		const isMounted = useIsMounted();
-    const dispatch = useDispatch()
+		const dispatch = useDispatch();
     const {
       testament: testGlobal,
       book: bookGlobal,
@@ -60,6 +59,7 @@ export default function Main() {
     useEffect(() => {
         if (ref?.current) ref.current.scrollTo({ y: 0 });
     }, [verses]);
+
 
     return (
         <SafeArea>

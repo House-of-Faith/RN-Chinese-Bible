@@ -1,28 +1,31 @@
 import { isEqual } from 'lodash';
 
 export const initialState = {
+	storeRehydrated: false,
 	theme: "light",
 	language: "english", // simplified, traditional
 	currentScripture: {
 		testament: "old", // new
 		book: 0,
 		chapter: 0
-	}
+	},
 };
 
 export default function reducer(state = initialState, action) {
 	const { type, payload } = action;
 	switch (type) {
-			case "LIGHT_THEME":
-					return { ...state, theme: "light" };
-			case "DARK_THEME":
-					return { ...state, theme: "dark" };
-			case "SET_LANGUAGE":
-					return setLanguage(state, payload);
-			case "SET_CURRENT_SCRIPTURE":
-				return setCurrentScripture(state, payload);
-			default:
-					return { ...state };
+		case "SET_CURRENT_SCRIPTURE":
+			return setCurrentScripture(state, payload);
+		case "LIGHT_THEME":
+			return { ...state, theme: "light" };
+		case "DARK_THEME":
+			return { ...state, theme: "dark" };
+		case "SET_LANGUAGE":
+			return setLanguage(state, payload);
+		case "REHYDRATE_STORE":
+			return rehydrateStore(state, payload);
+		default:
+			return { ...state };
 	}
 };
 
@@ -49,4 +52,11 @@ function setCurrentScripture(state, payload) {
 	if (!isValid) return { ...state }
 	
 	return { ...state, currentScripture: newScripture };
+}
+
+function rehydrateStore(state, payload) {
+	if (!payload) {
+		return { ...state};
+	}
+	return { ...payload, storeRehydrated: true };
 }
