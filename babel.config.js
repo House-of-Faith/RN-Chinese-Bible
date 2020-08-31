@@ -6,9 +6,9 @@ module.exports = function(api) {
       [
         'module-resolver',
         {
-          'root': ['./'],
+          'root': ['./App'],
           'alias': {
-            'translations': './assets/translations'
+            'assets': './assets'
           }
         },
       ],
