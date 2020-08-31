@@ -11,10 +11,10 @@ const App = () => {
     return (
         <Provider store={store}>
             <AppTheme>
-							<RootContainer>
-								<RootNavigation />
-							</RootContainer>
-						</AppTheme>
+              <RootContainer>
+                <RootNavigation />
+              </RootContainer>
+            </AppTheme>
         </Provider>
     );
 };

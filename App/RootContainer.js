@@ -10,9 +10,9 @@ import { usePersistStore } from 'lib/hooks';
 import { selectors } from 'store';
 
 export default function RootContainer({ children }) {
-	const storeRehydrated = useSelector(selectors.storeRehydrated);
-	usePersistStore();
+  const storeRehydrated = useSelector(selectors.storeRehydrated);
+  usePersistStore();
 
-	if (!storeRehydrated) return null
-	return children;
+  if (!storeRehydrated) return null
+  return children;
 }

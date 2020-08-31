@@ -5,7 +5,7 @@ import usePersistStore from './usePersistStore';
 
 export {
   useIsMounted, 
-	useBible,
-	useAppState,
-	usePersistStore,
+  useBible,
+  useAppState,
+  usePersistStore,
 };
