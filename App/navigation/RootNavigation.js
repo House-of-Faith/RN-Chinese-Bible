@@ -1,12 +1,12 @@
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 
-import Settings from "screens/Settings";
+import SettingsNavigator from "navigation/SettingsNavigator";
 import DrawerNavigator from "navigation/DrawerNavigator";
 
 const App = createAppContainer(
     createSwitchNavigator({
         Main: DrawerNavigator,
-        Settings: Settings,
+        Settings: SettingsNavigator,
     })
 );
 

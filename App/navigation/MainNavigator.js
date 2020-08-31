@@ -8,7 +8,7 @@ import { useTheme } from "emotion-theming";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import styled from "@emotion/native";
 
-import Main from "screens/Main";
+import Bible from "screens/Bible";
 import { useBible } from 'lib/hooks';
 import { selectors } from "store";
 
@@ -37,7 +37,7 @@ export default function MainNavigator({ navigation }) {
                     headerTitle: <Title>{`${books[book]} ${chapter + 1}`}</Title>,
                 }}
             >
-                <Stack.Screen name="Main" component={Main} />
+                <Stack.Screen name="Bible" component={Bible} />
             </Stack.Navigator>
         </NavigationContainer>
     );
