@@ -46,7 +46,6 @@
     "expo-cli": "^3.25.1",
     "jest": "^26.4.2",
     "pre-commit": "^1.2.2",
-    "prettier": "^2.1.1",
     "react-test-renderer": "^16.13.1"
   },
   "jest": {
