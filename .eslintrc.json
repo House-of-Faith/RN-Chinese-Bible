@@ -9,6 +9,7 @@
     "plugin:react/recommended"
   ],
   "globals": {
+    "expect": "readonly",
     "test": "readonly"
   },
   "parserOptions": {
