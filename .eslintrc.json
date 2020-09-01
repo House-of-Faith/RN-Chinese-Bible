@@ -2,16 +2,13 @@
   "env": {
     "browser": true,
     "es6": true,
+    "jest": true,
     "node": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended"
   ],
-  "globals": {
-    "expect": "readonly",
-    "test": "readonly"
-  },
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
