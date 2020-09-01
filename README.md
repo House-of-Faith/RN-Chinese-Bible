@@ -1,21 +1,31 @@
 # RN-Chinese-Bible
 
-This is a React Native Expo app that allows you to read the bible in 3 different languages: Simplified Chinese, Traditional Chinese, and English
+This is a React Native Expo app that allows you to read the Bible in 2 different languages: Chinese (both traditional and simplified) and English.
 
-## Setup Tools
+## Project Setup
 
-`npm install -g expo-cli`
+Install Yarn: https://classic.yarnpkg.com/en/docs/install/
 
-for more info see [https://docs.expo.io/workflow/expo-cli/](https://docs.expo.io/workflow/expo-cli/)
+## Running Project
 
-## Running project
+```shell
+git clone https://github.com/House-of-Faith/RN-Chinese-Bible.git
+yarn install
+```
 
-`yarn install`
+_*Please do not use npm to install - if you do, do not commit the package-lock.json file._
 
-_*please do you use npm to install - if you do, do not commit the package-lock.json_
+**Android:**
+```shell
+npm run android
+```
 
- Android: `npm run android`
- 
- iOS: `npm run ios`
+**iOS:**
+```shell
+npm run ios
+```
 
- clean expo cache: `expo start -c`
+**Clean Expo cache:**
+```shell
+npx expo start -c
+```
