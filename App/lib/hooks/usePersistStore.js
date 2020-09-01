@@ -28,7 +28,6 @@ export default function usePersistStore() {
   }, [appState]);
   
   function saveStore() {
-    debugger
     const jsonValue = JSON.stringify(state)
     AsyncStorage.setItem('@storage_Key', jsonValue).catch(err => {
       console.log(err);
@@ -36,7 +35,6 @@ export default function usePersistStore() {
   }
 
   function retrieveStore() {
-    debugger
     AsyncStorage.getItem('@storage_Key').then(jsonValue => {
       const newState = jsonValue != null ? JSON.parse(jsonValue) : initialState;
       dispatch({
