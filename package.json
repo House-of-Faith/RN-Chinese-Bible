@@ -51,5 +51,8 @@
   "jest": {
     "preset": "react-native"
   },
+  "pre-commit": [
+    "test"
+  ],
   "private": true
 }
