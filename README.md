@@ -29,3 +29,8 @@ npm run ios
 ```shell
 npx expo start -c
 ```
+
+## Running Tests
+```shell
+npm run test
+```
