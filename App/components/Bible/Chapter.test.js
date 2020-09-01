@@ -3,19 +3,19 @@ import { ThemeProvider } from 'emotion-theming';
 import { render } from '@testing-library/react-native';
 
 import themes from 'theme/themes';
-import Verse from './Verse';
+import Chapter from './Chapter';
 
 function setup() {
   return render(
     <ThemeProvider theme={themes['light']}>
-      <Verse number={1} text="And it came to pass..." />
+      <Chapter verses={['Verse 1', 'Verse 2']} />
     </ThemeProvider>
   );
 }
 
-test('renders a verse', () => {
-  const { getByText } = setup();
-  const verse = getByText(/1 and it came to pass/i);
+test('renders a chapter with two verses', () => {
+  const { getAllByText } = setup();
+  const verses = getAllByText(/\d Verse \d/i);
 
-  expect(verse).toMatchSnapshot();
+  expect(verses.length).toEqual(2);
 });
