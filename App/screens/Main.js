@@ -8,9 +8,8 @@ import { useBible, useIsMounted } from 'lib/hooks';
 
 export default function Main() {
     const ref = useRef(null);
-
-		const isMounted = useIsMounted();
-    const dispatch = useDispatch()
+    const isMounted = useIsMounted();
+    const dispatch = useDispatch();
     const {
       testament: testGlobal,
       book: bookGlobal,
@@ -25,7 +24,7 @@ export default function Main() {
       setChapter,
       verses, // array of verses
       nextChapter,
-			prevChapter,
+      prevChapter,
     } = useBible({ testament: testGlobal, book: bookGlobal, chapter: chapterGlobal });
 
     useEffect(() => {
@@ -50,8 +49,8 @@ export default function Main() {
 
     function setCurrentScripture({ testament = testament, book = book, chapter = chapter}) {
       dispatch({ type: "SET_CURRENT_SCRIPTURE", payload: { testament, book, chapter }})
-		}
-		
+    }
+    
     const config = {
         velocityThreshold: 0.3,
         directionalOffsetThreshold: 100,
@@ -60,6 +59,7 @@ export default function Main() {
     useEffect(() => {
         if (ref?.current) ref.current.scrollTo({ y: 0 });
     }, [verses]);
+
 
     return (
         <SafeArea>
