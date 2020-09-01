@@ -5,6 +5,7 @@
     "ios": "expo start --ios",
     "start": "expo start",
     "test": "jest",
+    "test:watch": "jest --watchAll",
     "web": "expo start --web"
   },
   "dependencies": {
@@ -43,6 +44,9 @@
     "expo-cli": "^3.25.1",
     "jest": "^26.4.2",
     "react-test-renderer": "^16.13.1"
+  },
+  "jest": {
+    "preset": "react-native"
   },
   "private": true
 }
