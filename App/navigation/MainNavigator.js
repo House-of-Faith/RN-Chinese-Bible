@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Share } from "react-native";
 import * as MailComposer from "expo-mail-composer";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,11 +16,17 @@ const Stack = createStackNavigator();
 
 export default function MainNavigator({ navigation }) {
     const { background } = useTheme();
-    const [showDropdown, setShowDropdown] = useState(false);
+    const showDropdown = useSelector(selectors.showDropdown);
     const { books, setTestament } = useBible();
     const { testament, book, chapter } = useSelector(
         selectors.currentScripture
     );
+    const dispatch = useDispatch();
+
+    const setShowDropdown = () => {
+        if (showDropdown) dispatch({ type: "HIDE_DROPDOWN" });
+        else dispatch({ type: "SHOW_DROPDOWN" });
+    };
 
     useEffect(() => {
         setTestament(testament);
@@ -104,12 +110,7 @@ function HeaderRight({ dropdownState, navigation }) {
                 setShowDropdown(!showDropdown);
             }}
         >
-            <Icon
-                name={showDropdown ? "close-circle-outline" : "dots-vertical"}
-                size={showDropdown ? 25 : 21}
-                color={showDropdown ? text.reading : text.navbar}
-                style={{ zIndex: 1 }}
-            />
+            <Icon name="dots-vertical" size={21} color={text.navbar} />
             {showDropdown && (
                 <MenuContainer>
                     <MenuItem onPress={onShare}>
@@ -152,12 +153,12 @@ const Title = styled.Text(({ theme }) => ({
 const MenuContainer = styled.View(({ theme }) => ({
     position: "absolute",
     top: -7,
-    right: 12,
-    height: 170,
+    right: 10,
+    height: 153,
     width: 125,
     backgroundColor: theme.background.card,
     paddingLeft: 20,
-    paddingTop: 35,
+    paddingTop: 20,
 }));
 
 const MenuItem = styled.TouchableOpacity(({ theme }) => ({
