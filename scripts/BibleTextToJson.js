@@ -1,8 +1,8 @@
-/*/////////////////////////////////////////// Description /////////////////////////////////////////////
+/*///////////////////////////////////////// Description ////////////////////////////////////////////
 
   Creates a bible .json file from a .txt file
 
-//////////////////////////////////////////////// Usage ////////////////////////////////////////////////
+////////////////////////////////////////////// Usage ///////////////////////////////////////////////
 
   node BibleTextToJson.js [importFileName] [exportFileName]
 
@@ -12,11 +12,12 @@
   example 2 (with args):
     node BibleTextToJson.js Chinese_Bible_Simplified.txt simplified.json
 
-///////////////////////////////////////////// Input/Output /////////////////////////////////////////////
+/////////////////////////////////////////// Input/Output ///////////////////////////////////////////
 
   The expected formats are as follows:
 
-  The import .txt file should contain at least 31,102 seperate lines - 1 line per each verse in the bible.
+  The import .txt file should contain at least 31,102 seperate lines - 1 line per each verse in the
+  bible.
     Each line should be in the format: book chapter:verse text, for example: Joh 11:35 Jesus wept.
     The book name may be abbreviated, but all lines must be in the correct order.
     Leading line whitespace will be ignored.
@@ -44,7 +45,6 @@ const exportFile = args[1] || 'bible.json';
 const content = readFileSync(__dirname + '/' + importFile).toString();
 
 const oldTestLength = 39;
-const newTestLength = 27;
 
 const OLD_TESTAMENT = 'Old Testament';
 const NEW_TESTAMENT = 'New Testament';
@@ -57,7 +57,7 @@ const json = {
 let currentBookIndex = -1;
 let currentTestament = OLD_TESTAMENT;
 
-function isInOldTestament(){
+function isInOldTestament() {
   return currentBookIndex < oldTestLength;
 }
 
@@ -69,11 +69,11 @@ function testamentBookIndex() {
 
 let prevBook = null;
 
-content.split('\n').forEach((line, i) => {
+content.split('\n').forEach(line => {
   const matches = line.match(/^\s*(\w+)\s(\d+):(\d+)\s(.*)$/);
-  
+
   if (matches) {
-    const [, book, chapter, verse, content] = matches;
+    const [, book, chapter, content] = matches;
 
     if (book !== prevBook) {
       currentBookIndex += 1;
@@ -82,12 +82,11 @@ content.split('\n').forEach((line, i) => {
     }
     const bookIndex = testamentBookIndex();
     const chapterIndex = +chapter - 1;
-    const verseIndex = +verse - 1;
 
     if (json[currentTestament].length <= bookIndex) {
       json[currentTestament].push([]);
     }
-      
+
     if (json[currentTestament][bookIndex].length <= chapterIndex) {
       json[currentTestament][bookIndex].push([]);
     }
