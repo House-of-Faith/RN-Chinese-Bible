@@ -14,8 +14,8 @@ export default function ChapterList({ chapters, onSelectChapter }) {
 }
 
 ChapterList.propTypes = {
-  chapters: PropTypes.array,
-  onSelectChapter: PropTypes.func
+  chapters: PropTypes.array.isRequired,
+  onSelectChapter: PropTypes.func.isRequired
 };
 
 const ChapterBox = styled.TouchableOpacity(({ theme }) => ({

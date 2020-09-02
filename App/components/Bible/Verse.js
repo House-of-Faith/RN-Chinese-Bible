@@ -19,6 +19,6 @@ const Text = styled.Text(({ theme }) => ({
 }));
 
 Verse.propTypes = {
-  number: PropTypes.number,
-  text: PropTypes.string
+  number: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired
 };

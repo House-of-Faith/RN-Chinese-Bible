@@ -24,9 +24,9 @@ export default function SettingsOption({ label, selected, onPress }) {
 }
 
 SettingsOption.propTypes = {
-  label: PropTypes.string,
-  selected: PropTypes.bool,
-  onPress: PropTypes.func
+  label: PropTypes.string.isRequired,
+  selected: PropTypes.bool.isRequired,
+  onPress: PropTypes.func.isRequired
 };
 
 const ButtonContainer = styled.View(() => ({

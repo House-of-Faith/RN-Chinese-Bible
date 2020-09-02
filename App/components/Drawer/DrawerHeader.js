@@ -26,8 +26,8 @@ export default function DrawerHeader({ testament, onPress }) {
 }
 
 DrawerHeader.propTypes = {
-  testament: PropTypes.string,
-  onPress: PropTypes.func
+  testament: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired
 };
 
 const Header = styled.View(({ theme }) => ({

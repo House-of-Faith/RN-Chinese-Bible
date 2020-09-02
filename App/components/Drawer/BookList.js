@@ -6,7 +6,7 @@ import BookTitle from 'components/Drawer/BookTitle';
 export default function BookList({ books, onSelectBook }) {
   return books?.map((book, i) => (
     <BookTitle
-      key={book}
+      key={`${book}-${i}`}
       book={book}
       onPress={() => onSelectBook(i)}
     />
@@ -14,6 +14,6 @@ export default function BookList({ books, onSelectBook }) {
 }
 
 BookList.propTypes = {
-  books: PropTypes.array,
-  onSelectBook: PropTypes.func
+  books: PropTypes.array.isRequired,
+  onSelectBook: PropTypes.func.isRequired
 };
