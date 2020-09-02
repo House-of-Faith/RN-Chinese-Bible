@@ -47,7 +47,7 @@ export default function SettingsNavigator({ navigation }) {
 }
 
 SettingsNavigator.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired
 };
 
 const Title = styled.Text(({ theme }) => ({

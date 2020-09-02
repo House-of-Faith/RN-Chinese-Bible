@@ -14,7 +14,7 @@ export default function ChapterList({ chapters, onSelectChapter }) {
 }
 
 ChapterList.propTypes = {
-  chapters: PropTypes.array.isRequired,
+  chapters: PropTypes.number.isRequired,
   onSelectChapter: PropTypes.func.isRequired
 };
 

@@ -14,5 +14,5 @@ export default function AppTheme({ children }) {
 }
 
 AppTheme.propTypes = {
-  children: PropTypes.object.isRequired
+  children: PropTypes.element.isRequired
 };

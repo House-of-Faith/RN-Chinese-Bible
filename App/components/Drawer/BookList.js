@@ -14,6 +14,6 @@ export default function BookList({ books, onSelectBook }) {
 }
 
 BookList.propTypes = {
-  books: PropTypes.array.isRequired,
+  books: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSelectBook: PropTypes.func.isRequired
 };

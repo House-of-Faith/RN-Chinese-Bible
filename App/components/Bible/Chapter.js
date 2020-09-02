@@ -8,5 +8,5 @@ export default function Chapter({ verses }) {
 }
 
 Chapter.propTypes = {
-  verses: PropTypes.array.isRequired
+  verses: PropTypes.arrayOf(PropTypes.string).isRequired
 };

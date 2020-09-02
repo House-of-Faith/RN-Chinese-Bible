@@ -126,8 +126,12 @@ function HeaderRight({ dropdownState, navigation }) {
 }
 
 HeaderRight.propTypes = {
-  dropdownState: PropTypes.array,
-  navigation: PropTypes.object
+  dropdownState: PropTypes.arrayOf(([val, func], _key, componentName, _location, propFullName) => {
+    if (!(typeof val === 'boolean' && typeof func === 'function')) {
+      return new Error(`Invalid prop ${propFullName} supplied to ${componentName}!`);
+    }
+  }).isRequired,
+  navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired
 };
 
 const HamburgerMenu = styled.TouchableOpacity(() => ({
