@@ -33,7 +33,7 @@ export default function Main() {
     if (testament === testGlobal) return;
     setTestament(testGlobal);
   }, [testGlobal]);
-    
+
   useEffect(() => {
     if (book === bookGlobal) return;
     setBook(bookGlobal);
@@ -49,10 +49,10 @@ export default function Main() {
     setCurrentScripture({ testament, book, chapter });
   }, [testament, book, chapter]);
 
-  function setCurrentScripture({ testament = testament, book = book, chapter = chapter}) {
-    dispatch({ type: 'SET_CURRENT_SCRIPTURE', payload: { testament, book, chapter }});
+  function setCurrentScripture({ testament = testament, book = book, chapter = chapter }) {
+    dispatch({ type: 'SET_CURRENT_SCRIPTURE', payload: { testament, book, chapter } });
   }
-		
+
   const config = {
     velocityThreshold: 0.3,
     directionalOffsetThreshold: 100,
@@ -82,7 +82,7 @@ const SafeArea = styled.SafeAreaView(({ theme }) => ({
   backgroundColor: theme.background.reading,
 }));
 
-const Container = styled.ScrollView(({ theme }) => ({
+const Container = styled.ScrollView(() => ({
   paddingHorizontal: 32,
 }));
 

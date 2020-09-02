@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/native';
 
 export default function Verse({ number, text }) {
@@ -16,3 +17,8 @@ const Text = styled.Text(({ theme }) => ({
   marginBottom: 13,
   color: theme.text.reading,
 }));
+
+Verse.propTypes = {
+  number: PropTypes.number,
+  text: PropTypes.string
+};

@@ -20,12 +20,12 @@ export default function Settings() {
       <SubContainer borderBottom>
         <SubTitle>THEME</SubTitle>
         <SettingsOption
-							  label="Light Theme"
+          label="Light Theme"
           selected={theme === 'light'}
           onPress={() => dispatch({ type: 'LIGHT_THEME' })}
         />
         <SettingsOption
-							  label="Dark Theme"
+          label="Dark Theme"
           selected={theme === 'dark'}
           onPress={() => dispatch({ type: 'DARK_THEME' })}
         />
@@ -34,17 +34,17 @@ export default function Settings() {
       <SubContainer borderBottom>
         <SubTitle>LANGUAGE</SubTitle>
         <SettingsOption
-							  label="English"
+          label="English"
           selected={language === 'english'}
           onPress={() => setLanguage('english')}
         />
         <SettingsOption
-							  label="Traditional Chinese"
+          label="Traditional Chinese"
           selected={language === 'traditional'}
           onPress={() => setLanguage('traditional')}
         />
         <SettingsOption
-							  label="Simplified Chinese"
+          label="Simplified Chinese"
           selected={language === 'simplified'}
           onPress={() => setLanguage('simplified')}
         />
@@ -53,9 +53,9 @@ export default function Settings() {
       <SubContainer>
         <SubTitle>ADDITIONAL INFO</SubTitle>
         <SettingsOption
-							  label="About Us"
+          label="About Us"
           selected={false}
-          onPress={() => {}}
+          onPress={() => { }}
         />
       </SubContainer>
     </Container>

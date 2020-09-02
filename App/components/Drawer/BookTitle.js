@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTheme } from 'emotion-theming';
+import PropTypes from 'prop-types';
 import styled from '@emotion/native';
 import { AntDesign as Icon } from '@expo/vector-icons';
 
 export default function BookList({ book, onPress, isSelected = false }) {
   const { text } = useTheme();
-	
+
   return (
     <BookTitleContainer onPress={onPress}>
       <BookTitle>{book}</BookTitle>
@@ -19,7 +20,13 @@ export default function BookList({ book, onPress, isSelected = false }) {
   );
 }
 
-const BookTitleContainer = styled.TouchableOpacity(({ theme }) => ({
+BookList.propTypes = {
+  book: PropTypes.element,
+  onPress: PropTypes.func,
+  isSelected: PropTypes.bool
+};
+
+const BookTitleContainer = styled.TouchableOpacity(() => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',

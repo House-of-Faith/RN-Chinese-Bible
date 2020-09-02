@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavigationContainer } from '@react-navigation/native';
 import { useTheme } from 'emotion-theming';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -17,6 +18,7 @@ export default function SettingsNavigator({ navigation }) {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
+          // eslint-disable-next-line react/display-name
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => {
@@ -43,6 +45,10 @@ export default function SettingsNavigator({ navigation }) {
     </NavigationContainer>
   );
 }
+
+SettingsNavigator.propTypes = {
+  navigation: PropTypes.object
+};
 
 const Title = styled.Text(({ theme }) => ({
   fontSize: 22,

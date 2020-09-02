@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import {
   ScrollView,
@@ -37,7 +38,7 @@ export default function Drawer({ navigation }) {
         }}
       >
         <DrawerHeader
-								    testament={testament}
+          testament={testament}
           onPress={(newTest) => {
             setBook(null);
             setTestament(newTest);
@@ -45,7 +46,7 @@ export default function Drawer({ navigation }) {
         />
         {book !== null ? (
           <BookSelected>
-											  <BookTitle
+            <BookTitle
               onPress={() => setBook(null)}
               book={books[book]}
               isSelected
@@ -86,13 +87,17 @@ export default function Drawer({ navigation }) {
   );
 }
 
-const BookSelected = styled.View(({ theme }) => ({
+Drawer.propTypes = {
+  navigation: PropTypes.object
+};
+
+const BookSelected = styled.View(() => ({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
 }));
 
-const ReturnContainer = styled.TouchableOpacity(({ theme }) => ({
+const ReturnContainer = styled.TouchableOpacity(() => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-start',

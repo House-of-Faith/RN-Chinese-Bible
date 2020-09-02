@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Ionicons as Icon } from '@expo/vector-icons';
 import { useTheme } from 'emotion-theming';
 import styled from '@emotion/native';
 
-export default function SettingsOption({ label, selected, onPress}) {
+export default function SettingsOption({ label, selected, onPress }) {
   const { text } = useTheme();
 
   return (
@@ -22,12 +23,18 @@ export default function SettingsOption({ label, selected, onPress}) {
   );
 }
 
-const ButtonContainer = styled.View(({ theme }) => ({
+SettingsOption.propTypes = {
+  label: PropTypes.string,
+  selected: PropTypes.bool,
+  onPress: PropTypes.func
+};
+
+const ButtonContainer = styled.View(() => ({
   display: 'flex',
   flexDirection: 'row',
 }));
 
-const Button = styled.TouchableOpacity(({ theme }) => ({
+const Button = styled.TouchableOpacity(() => ({
   marginRight: 20,
 }));
 

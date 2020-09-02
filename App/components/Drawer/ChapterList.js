@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/native';
 
 export default function ChapterList({ chapters, onSelectChapter }) {
@@ -11,6 +12,11 @@ export default function ChapterList({ chapters, onSelectChapter }) {
     </ChapterBox>
   ));
 }
+
+ChapterList.propTypes = {
+  chapters: PropTypes.array,
+  onSelectChapter: PropTypes.func
+};
 
 const ChapterBox = styled.TouchableOpacity(({ theme }) => ({
   display: 'flex',

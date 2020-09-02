@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/native';
 
 export default function DrawerHeader({ testament, onPress }) {
@@ -9,7 +10,7 @@ export default function DrawerHeader({ testament, onPress }) {
         onPress={() => onPress('old')}
       >
         <Title selected={testament === 'old'}>
-							Old T.
+          Old T.
         </Title>
       </TitleContainer>
       <TitleContainer
@@ -17,12 +18,17 @@ export default function DrawerHeader({ testament, onPress }) {
         onPress={() => onPress('new')}
       >
         <Title selected={testament === 'new'}>
-							New T.
+          New T.
         </Title>
       </TitleContainer>
     </Header>
   );
 }
+
+DrawerHeader.propTypes = {
+  testament: PropTypes.string,
+  onPress: PropTypes.func
+};
 
 const Header = styled.View(({ theme }) => ({
   display: 'flex',

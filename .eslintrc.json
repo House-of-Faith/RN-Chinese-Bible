@@ -24,7 +24,7 @@
     "linebreak-style": ["error", "unix"],
     "max-len": ["warn", { "code": 100 }],
     "quotes": ["error", "single"],
-    "react/prop-types": "off", // We should consider setting this to "warn"
+    "react/prop-types": "warn",
     "semi": ["error", "always"]
   }
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Share } from 'react-native';
 import * as MailComposer from 'expo-mail-composer';
@@ -15,11 +16,11 @@ import { selectors } from 'store';
 const Stack = createStackNavigator();
 
 export default function MainNavigator({ navigation }) {
-	  const { background } = useTheme();
+  const { background } = useTheme();
   const [showDropdown, setShowDropdown] = useState(false);
   const { books, setTestament } = useBible();
   const { testament, book, chapter } = useSelector(selectors.currentScripture);
-		
+
   useEffect(() => {
     setTestament(testament);
   }, [testament]);
@@ -32,8 +33,12 @@ export default function MainNavigator({ navigation }) {
             backgroundColor: background.navbar,
             shadowColor: 'transparent',
           },
+          // eslint-disable-next-line react/display-name
           headerLeft: () => <HeaderLeft navigation={navigation} />,
-          headerRight: () => <HeaderRight navigation={navigation} dropdownState={[showDropdown, setShowDropdown]} />,
+          // eslint-disable-next-line react/display-name
+          headerRight: () => (
+            <HeaderRight navigation={navigation} dropdownState={[showDropdown, setShowDropdown]} />
+          ),
           headerTitle: <Title>{`${books[book]} ${chapter + 1}`}</Title>,
         }}
       >
@@ -42,6 +47,10 @@ export default function MainNavigator({ navigation }) {
     </NavigationContainer>
   );
 }
+
+MainNavigator.propTypes = {
+  navigation: PropTypes.object
+};
 
 function HeaderRight({ dropdownState, navigation }) {
   const { text } = useTheme();
@@ -116,7 +125,12 @@ function HeaderRight({ dropdownState, navigation }) {
   );
 }
 
-const HamburgerMenu = styled.TouchableOpacity(({ theme }) => ({
+HeaderRight.propTypes = {
+  dropdownState: PropTypes.array,
+  navigation: PropTypes.object
+};
+
+const HamburgerMenu = styled.TouchableOpacity(() => ({
   paddingRight: 19,
 }));
 
@@ -129,11 +143,15 @@ function HeaderLeft({ navigation }) {
   );
 }
 
-const DotMenu = styled.TouchableOpacity(({ theme }) => ({
+HeaderLeft.propTypes = {
+  navigation: PropTypes.object
+};
+
+const DotMenu = styled.TouchableOpacity(() => ({
   marginLeft: 19,
 }));
 
-const Title = styled.Text(({ theme }) => ({
+const Title = styled.Text(() => ({
   fontSize: 22,
   color: '#ffffff',
 }));
@@ -149,7 +167,7 @@ const MenuContainer = styled.View(({ theme }) => ({
   paddingTop: 20,
 }));
 
-const MenuItem = styled.TouchableOpacity(({ theme }) => ({
+const MenuItem = styled.TouchableOpacity(() => ({
   width: 88,
   marginBottom: 20,
 }));
