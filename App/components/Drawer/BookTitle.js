@@ -21,7 +21,7 @@ export default function BookList({ book, onPress, isSelected = false }) {
 }
 
 BookList.propTypes = {
-  book: PropTypes.element,
+  book: PropTypes.string,
   onPress: PropTypes.func,
   isSelected: PropTypes.bool
 };

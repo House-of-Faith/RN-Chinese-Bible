@@ -14,5 +14,5 @@ export default function AppTheme({ children }) {
 }
 
 AppTheme.propTypes = {
-  children: PropTypes.array
+  children: PropTypes.object
 };
