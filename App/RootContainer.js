@@ -13,6 +13,6 @@ export default function RootContainer({ children }) {
   const storeRehydrated = useSelector(selectors.storeRehydrated);
   usePersistStore();
 
-  if (!storeRehydrated) return null
+  if (!storeRehydrated) return null;
   return children;
 }

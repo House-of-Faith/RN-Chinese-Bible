@@ -46,8 +46,8 @@ const content = readFileSync(__dirname + '/' + importFile).toString();
 const oldTestLength = 39;
 const newTestLength = 27;
 
-const OLD_TESTAMENT = "Old Testament";
-const NEW_TESTAMENT = "New Testament";
+const OLD_TESTAMENT = 'Old Testament';
+const NEW_TESTAMENT = 'New Testament';
 
 const json = {
   [OLD_TESTAMENT]: [],
@@ -95,9 +95,9 @@ content.split('\n').forEach((line, i) => {
     json[currentTestament][bookIndex][chapterIndex].push(content);
 
   }
-})
+});
 
-writeFileSync(__dirname + '/' + exportFile, JSON.stringify(json, null, 2))
+writeFileSync(__dirname + '/' + exportFile, JSON.stringify(json, null, 2));
 
 // END //////////////////////////////////////////////////////////////////////
 

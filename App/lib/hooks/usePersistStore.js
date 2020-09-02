@@ -16,7 +16,7 @@ export default function usePersistStore() {
 
     return () => {
       saveStore();
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -28,21 +28,21 @@ export default function usePersistStore() {
   }, [appState]);
   
   function saveStore() {
-    const jsonValue = JSON.stringify(state)
+    const jsonValue = JSON.stringify(state);
     AsyncStorage.setItem('@storage_Key', jsonValue).catch(err => {
       console.log(err);
-    })
+    });
   }
 
   function retrieveStore() {
     AsyncStorage.getItem('@storage_Key').then(jsonValue => {
       const newState = jsonValue != null ? JSON.parse(jsonValue) : initialState;
       dispatch({
-        type: "REHYDRATE_STORE",
+        type: 'REHYDRATE_STORE',
         payload: newState,
       });
     }).catch(err => {
       console.log(err);
-    })
+    });
   }
 }

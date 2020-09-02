@@ -7,4 +7,4 @@ export default function useIsMounted() {
     isMountRef.current = true;
   }, []);
   return isMountRef.current;
-};
+}

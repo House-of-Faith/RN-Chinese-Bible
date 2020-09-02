@@ -5,7 +5,7 @@ import english from 'assets/translations/english.json';
 import traditional from 'assets/translations/traditional.json';
 import simplified from 'assets/translations/simplified.json';
 
-import { selectors } from 'store'
+import { selectors } from 'store';
 
 const languages = {
   english,
@@ -14,26 +14,26 @@ const languages = {
 };
 
 const testMap = {
-  old: "Old Testament",
-  new: "New Testament",
+  old: 'Old Testament',
+  new: 'New Testament',
 };
 
 const books = {
-  old: ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi"],
-  new: ["Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"]
-}
+  old: ['Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy', 'Joshua', 'Judges', 'Ruth', '1 Samuel', '2 Samuel', '1 Kings', '2 Kings', '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah', 'Esther', 'Job', 'Psalms', 'Proverbs', 'Ecclesiastes', 'Song of Solomon', 'Isaiah', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel', 'Hosea', 'Joel', 'Amos', 'Obadiah', 'Jonah', 'Micah', 'Nahum', 'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi'],
+  new: ['Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans', '1 Corinthians', '2 Corinthians', 'Galatians', 'Ephesians', 'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians', '1 Timothy', '2 Timothy', 'Titus', 'Philemon', 'Hebrews', 'James', '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude', 'Revelation']
+};
 
-const allBooks = [...books.old, ...books.new]
+const allBooks = [...books.old, ...books.new];
 
 export default function useBible(initialState) {
   const language = useSelector(selectors.language);
   const bible = languages[language];
 
-  const [testament, innerSetTestament] = useState(initialState?.testament || "old"); // new
+  const [testament, innerSetTestament] = useState(initialState?.testament || 'old'); // new
   const testKey = testMap[testament];
-  const [book, innerSetBook] = useState(initialState?.book ?? null)
-  const [chapter, innerSetChapter] = useState(initialState?.chapter ?? null)
-  const verses = bible[testKey]?.[book]?.[chapter] || []
+  const [book, innerSetBook] = useState(initialState?.book ?? null);
+  const [chapter, innerSetChapter] = useState(initialState?.chapter ?? null);
+  const verses = bible[testKey]?.[book]?.[chapter] || [];
 
   function nextChapter() {
     let nextChapter = chapter + 1;
@@ -102,22 +102,22 @@ export default function useBible(initialState) {
   function setBook(payload) {
     // TODO: allow book names?
     if (payload === null || payload === undefined) {
-      innerSetBook(null)
-      innerSetChapter(null)
+      innerSetBook(null);
+      innerSetChapter(null);
     }
     const isValid = (bible?.[testKey]?.[payload] || 0).length > 0;
     if (!isValid) return;
-    innerSetBook(payload)
+    innerSetBook(payload);
   }
 
   function setChapter(payload) {
     // TODO: allow book names
     if (payload === null || payload === undefined) {
-      innerSetChapter(null)
+      innerSetChapter(null);
     }
     const isValid = !!bible?.[testKey]?.[book]?.[payload];
     if (!isValid) return;
-    innerSetChapter(payload)
+    innerSetChapter(payload);
   }
 
   return {
@@ -132,5 +132,5 @@ export default function useBible(initialState) {
     verses, // array of verses
     nextChapter,
     prevChapter,
-  }
+  };
 }

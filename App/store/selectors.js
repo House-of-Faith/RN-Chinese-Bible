@@ -3,4 +3,4 @@ export default {
   language: (state) => state.language || 'english',
   currentScripture: (state) => state.currentScripture || { testament: 'old', book: 0, chapter: 0 },
   storeRehydrated: (state) => state.storeRehydrated || false,
-}
+};
