@@ -22,11 +22,11 @@ export default function usePersistStore() {
   useEffect(() => {
     if (!isMounted) return;
     if ('active' === appState) return;
-    
+
     // 'background' || 'inactive
     saveStore();
   }, [appState]);
-  
+
   function saveStore() {
     const jsonValue = JSON.stringify(state);
     AsyncStorage.setItem('@storage_Key', jsonValue).catch(err => {
@@ -36,7 +36,7 @@ export default function usePersistStore() {
 
   function retrieveStore() {
     AsyncStorage.getItem('@storage_Key').then(jsonValue => {
-      const newState = jsonValue != null ? JSON.parse(jsonValue) : initialState;
+      const newState = jsonValue != null ? JSON.parse(jsonValue) : {};
       dispatch({
         type: 'REHYDRATE_STORE',
         payload: newState,
