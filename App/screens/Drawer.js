@@ -88,7 +88,10 @@ export default function Drawer({ navigation }) {
 }
 
 Drawer.propTypes = {
-  navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired
+  navigation: PropTypes.shape({
+    closeDrawer: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired
+  }).isRequired
 };
 
 const BookSelected = styled.View(() => ({

@@ -1,15 +1,19 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { ThemeProvider } from 'emotion-theming';
 import { render } from '@testing-library/react-native';
 
+import store from 'store';
 import themes from 'theme/themes';
 import Chapter from './Chapter';
 
 function setup() {
   return render(
-    <ThemeProvider theme={themes['light']}>
-      <Chapter verses={['Verse 1', 'Verse 2']} />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={themes['light']}>
+        <Chapter verses={['Verse 1', 'Verse 2']} />
+      </ThemeProvider>
+    </Provider>
   );
 }
 

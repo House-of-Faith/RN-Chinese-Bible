@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useDispatch, useSelector } from'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import useAppState from './useAppState";
-import useIsMounted from "./useIsMounted';
+import useAppState from './useAppState';
+import useIsMounted from './useIsMounted';
 import initialState from 'store/reducers';
 
 export default function usePersistStore() {
