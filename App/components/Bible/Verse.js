@@ -1,7 +1,8 @@
-import React from "react";
-import styled from "@emotion/native";
-import { useSelector } from "react-redux";
-import { selectors } from "store";
+import React from 'react';
+import styled from '@emotion/native';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { selectors } from 'store';
 
 export default function Verse({ number, text }) {
     // TODO: Account for italics in english
@@ -19,3 +20,8 @@ const Text = styled.Text(({ theme, fontSize }) => ({
     marginBottom: 13,
     color: theme.text.reading,
 }));
+
+Verse.propTypes = {
+  number: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired
+};
