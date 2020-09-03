@@ -4,12 +4,15 @@ import { render } from '@testing-library/react-native';
 
 import themes from 'theme/themes';
 import Chapter from './Chapter';
+import MockStore from 'test/mocks/MockStore';
 
 function setup() {
   return render(
-    <ThemeProvider theme={themes['light']}>
-      <Chapter verses={['Verse 1', 'Verse 2']} />
-    </ThemeProvider>
+    <MockStore>
+      <ThemeProvider theme={themes['light']}>
+        <Chapter verses={['Verse 1', 'Verse 2']} />
+      </ThemeProvider>
+    </MockStore>
   );
 }
 

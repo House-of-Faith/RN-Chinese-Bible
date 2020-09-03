@@ -8,7 +8,8 @@ module.exports = function(api) {
         {
           'root': ['./App'],
           'alias': {
-            'assets': './assets'
+            'assets': './assets',
+            'test': './test'
           }
         },
       ],
