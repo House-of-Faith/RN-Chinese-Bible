@@ -26,7 +26,8 @@ export default function SettingsOption({ label, selected, onPress, fontSize }) {
 SettingsOption.propTypes = {
   label: PropTypes.string.isRequired,
   selected: PropTypes.bool.isRequired,
-  onPress: PropTypes.func.isRequired
+  onPress: PropTypes.func.isRequired,
+  fontSize: PropTypes.string.isRequired,
 };
 
 const ButtonContainer = styled.View(() => ({

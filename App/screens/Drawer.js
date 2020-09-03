@@ -58,13 +58,13 @@ export default function Drawer({ navigation }) {
                   type: 'SET_CURRENT_SCRIPTURE',
                   payload: { testament, book, chapter: selected },
                 });
-                navigation.closeDrawer();
+                navigation.closeDrawer(); // eslint-disable-line
                 // setBook(null);
               }}
             />
             <ReturnContainer
               onPress={() => {
-                navigation.closeDrawer();
+                navigation.closeDrawer(); // eslint-disable-line
                 setBook(null);
               }}
             >
@@ -88,7 +88,7 @@ export default function Drawer({ navigation }) {
 }
 
 Drawer.propTypes = {
-  navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired
+  navigation: PropTypes.shape({ navigate: PropTypes.object.isRequired }).isRequired
 };
 
 const BookSelected = styled.View(() => ({
