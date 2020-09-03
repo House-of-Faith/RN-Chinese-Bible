@@ -20,11 +20,8 @@ export default function Verse({ number, text }) {
 
   const isMounted = useIsMounted();
 
-  const breakVerseIntoParts = () => text.split(/\[|\]/);
-
-  const doesItStartWithItalics = () => text.startsWith('[');
-
-  const isItalicized = (i) => i % 2 === (startsWithItalics ? 0 : 1);
+  const [verseParts, setVerseParts] = useState(breakVerseIntoParts());
+  const [startsWithItalics, setStartsWithItalics] = useState(doesItStartWithItalics());
 
   useEffect(() => {
     if (!isMounted) return;
@@ -32,11 +29,17 @@ export default function Verse({ number, text }) {
     setStartsWithItalics(doesItStartWithItalics());
   }, [isEnglish, text, size]);
 
-  const [verseParts, setVerseParts] = useState(breakVerseIntoParts());
-  const [startsWithItalics, setStartsWithItalics] = useState(
-    doesItStartWithItalics()
-  );
+  function breakVerseIntoParts() {
+    return text.split(/\[|\]/);
+  }
 
+  function doesItStartWithItalics() {
+    return text.startsWith('[');
+  }
+
+  function isItalicized(i) {
+    return i % 2 === (startsWithItalics ? 0 : 1);
+  }
   return (
     <VerseContainer size={size}>
       <Text size={size}>
