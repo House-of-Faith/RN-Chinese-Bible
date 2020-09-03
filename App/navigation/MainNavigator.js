@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Share } from 'react-native';
 import * as MailComposer from 'expo-mail-composer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,10 +16,17 @@ import { selectors } from 'store';
 const Stack = createStackNavigator();
 
 export default function MainNavigator({ navigation }) {
+  const dispatch = useDispatch();
   const { background } = useTheme();
-  const [showDropdown, setShowDropdown] = useState(false);
+
+  const showDropdown = useSelector(selectors.showDropdown);
   const { books, setTestament } = useBible();
   const { testament, book, chapter } = useSelector(selectors.currentScripture);
+
+  const setShowDropdown = () => {
+    if (showDropdown) dispatch({ type: 'HIDE_DROPDOWN' });
+    else dispatch({ type: 'SHOW_DROPDOWN' });
+  };
 
   useEffect(() => {
     setTestament(testament);
@@ -34,7 +41,7 @@ export default function MainNavigator({ navigation }) {
             shadowColor: 'transparent',
           },
           // eslint-disable-next-line react/display-name
-          headerLeft: () => <HeaderLeft navigation={navigation} />,
+          headerLeft: () => <HeaderLeft navigation={navigation} showDropdown={showDropdown} />,
           // eslint-disable-next-line react/display-name
           headerRight: () => (
             <HeaderRight navigation={navigation} dropdownState={[showDropdown, setShowDropdown]} />
@@ -42,7 +49,7 @@ export default function MainNavigator({ navigation }) {
           headerTitle: <Title>{`${books[book]} ${chapter + 1}`}</Title>,
         }}
       >
-        <Stack.Screen name="Bible" component={Bible} />
+        <Stack.Screen name='Bible' component={Bible} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -100,7 +107,7 @@ function HeaderRight({ dropdownState, navigation }) {
       }}
     >
       <Icon
-        name="dots-vertical"
+        name='dots-vertical'
         size={21}
         color={text.navbar}
       />
@@ -142,7 +149,7 @@ function HeaderLeft({ navigation }) {
   const { text } = useTheme();
   return (
     <DotMenu onPress={() => navigation.toggleDrawer()}>
-      <Icon name="menu" size={22} color={text.navbar} />
+      <Icon name='menu' size={22} color={text.navbar} />
     </DotMenu>
   );
 }

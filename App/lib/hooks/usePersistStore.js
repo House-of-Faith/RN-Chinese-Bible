@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from'react-redux';
 
-import useAppState from './useAppState';
-import useIsMounted from './useIsMounted';
+import useAppState from './useAppState";
+import useIsMounted from "./useIsMounted';
+import initialState from 'store/reducers';
 
 export default function usePersistStore() {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export default function usePersistStore() {
 
   function retrieveStore() {
     AsyncStorage.getItem('@storage_Key').then(jsonValue => {
-      const newState = jsonValue != null ? JSON.parse(jsonValue) : {};
+      const newState = jsonValue != null ? JSON.parse(jsonValue) : initialState;
       dispatch({
         type: 'REHYDRATE_STORE',
         payload: newState,

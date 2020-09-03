@@ -4,13 +4,13 @@ import { Ionicons as Icon } from '@expo/vector-icons';
 import { useTheme } from 'emotion-theming';
 import styled from '@emotion/native';
 
-export default function SettingsOption({ label, selected, onPress }) {
+export default function SettingsOption({ label, selected, onPress, fontSize }) {
   const { text } = useTheme();
 
   return (
     <ButtonContainer>
       <Button onPress={onPress}>
-        <Option>{label}</Option>
+        <Option fontSize={fontSize}>{label}</Option>
       </Button>
       {selected && (
         <Icon
@@ -38,8 +38,8 @@ const Button = styled.TouchableOpacity(() => ({
   marginRight: 20,
 }));
 
-const Option = styled.Text(({ theme }) => ({
-  fontSize: 19,
+const Option = styled.Text(({ theme, fontSize }) => ({
+  fontSize: theme.fontSize[fontSize] || 17,
   marginLeft: 20,
   marginBottom: 20,
   color: theme.text.menu,
