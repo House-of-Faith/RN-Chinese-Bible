@@ -4,7 +4,7 @@ export const initialState = {
   storeRehydrated: false,
   theme: 'light',
   language: 'english', // simplified, traditional
-  fontSize: 'medium',
+  fontSize: 'medium', // small, large
   showDropdown: false,
   currentScripture: {
     testament: 'old', // new

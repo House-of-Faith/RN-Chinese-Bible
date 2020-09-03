@@ -23,11 +23,16 @@ export default function SettingsOption({ label, selected, onPress, fontSize }) {
   );
 }
 
+SettingsOption.defaultProps = {
+  onPress: () => {},
+  fontSize: 'medium',
+};
+
 SettingsOption.propTypes = {
   label: PropTypes.string.isRequired,
   selected: PropTypes.bool.isRequired,
-  onPress: PropTypes.func.isRequired,
-  fontSize: PropTypes.string.isRequired,
+  onPress: PropTypes.func,
+  fontSize: PropTypes.string,
 };
 
 const ButtonContainer = styled.View(() => ({
@@ -39,9 +44,16 @@ const Button = styled.TouchableOpacity(() => ({
   marginRight: 20,
 }));
 
+// keeps the text in place with change in size
+const marginMap = {
+  small: 23.5,
+  medium: 20,
+  large: 14,
+};
+
 const Option = styled.Text(({ theme, fontSize }) => ({
-  fontSize: theme.fontSize[fontSize] || 17,
+  fontSize: theme.fontSize[fontSize],
   marginLeft: 20,
-  marginBottom: 20,
+  marginBottom: marginMap[fontSize],
   color: theme.text.menu,
 }));

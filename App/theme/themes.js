@@ -1,3 +1,9 @@
+const fontSize = {
+  small: 14,
+  medium: 17,
+  large: 22,
+};
+
 export default {
   light: {
     background: {
@@ -16,11 +22,7 @@ export default {
     border: {
       color: '#757575',
     },
-    fontSize: {
-      small: 14,
-      medium: 17,
-      large: 22,
-    },
+    fontSize,
   },
   dark: {
     background: {
@@ -39,10 +41,6 @@ export default {
     border: {
       color: '#c4c4c4',
     },
-    fontSize: {
-      small: 14,
-      medium: 17,
-      large: 22,
-    },
+    fontSize,
   },
 };
