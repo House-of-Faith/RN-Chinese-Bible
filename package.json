@@ -49,8 +49,8 @@
     "react-test-renderer": "^16.13.1"
   },
   "jest": {
-		"preset": "react-native",
-		"setupFiles": [
+    "preset": "react-native",
+    "setupFiles": [
       "<rootDir>/test/setup.js"
     ]
   },
