@@ -1,24 +1,83 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/native';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { selectors } from 'store';
+import { useIsMounted } from 'lib/hooks';
 
 export default function Verse({ number, text }) {
-  // TODO: Account for italics in english
-  const fontSize = useSelector(selectors.fontSize);
+  const size = useSelector(selectors.fontSize);
+  const isEnglish = useSelector(selectors.language) === 'english';
+
+  if (!isEnglish)
+    return (
+      <VerseContainer size={size}>
+        <Text size={size}>
+          {number} {text}
+        </Text>
+      </VerseContainer>
+    );
+
+  const isMounted = useIsMounted();
+
+  const [verseParts, setVerseParts] = useState(breakVerseIntoParts());
+  const [startsWithItalics, setStartsWithItalics] = useState(doesItStartWithItalics());
+
+  useEffect(() => {
+    if (!isMounted) return;
+    setVerseParts(breakVerseIntoParts());
+    setStartsWithItalics(doesItStartWithItalics());
+  }, [isEnglish, text, size]);
+
+  function breakVerseIntoParts() {
+    return text.split(/\[|\]/);
+  }
+
+  function doesItStartWithItalics() {
+    return text.startsWith('[');
+  }
+
+  function isItalicized(i) {
+    return i % 2 === (startsWithItalics ? 0 : 1);
+  }
   return (
-    <Text fontSize={fontSize}>
-      {number} {text}
-    </Text>
+    <VerseContainer size={size}>
+      <Text size={size}>
+        {`${number} `}
+        {verseParts.map((phrase, i) => {
+          return (
+            <Text key={phrase + i} size={size} italicized={isItalicized(i)}>
+              {phrase}
+            </Text>
+          );
+        })}
+      </Text>
+    </VerseContainer>
   );
 }
 
-const Text = styled.Text(({ theme, fontSize }) => ({
-  fontSize: theme.fontSize[fontSize],
-  lineHeight: 27,
-  marginBottom: 13,
+const lineHeightMap = {
+  small: 21,
+  medium: 27,
+  large: 32,
+};
+
+const marginBottomMap = {
+  small: 13,
+  medium: 17,
+  large: 21,
+};
+
+const VerseContainer = styled.View(({ size }) => ({
+  marginBottom: marginBottomMap[size],
+}));
+
+const Text = styled.Text(({ theme, size, italicized }) => ({
+  fontSize: theme.fontSize[size],
+  lineHeight: lineHeightMap[size],
   color: theme.text.reading,
+  fontStyle: italicized ? 'italic' : 'normal',
+  fontWeight: italicized ? '300' : '400',
 }));
 
 Verse.propTypes = {

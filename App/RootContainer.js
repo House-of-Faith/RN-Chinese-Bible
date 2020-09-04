@@ -5,6 +5,7 @@ The purpose of this component is to place any app level logic that needs to happ
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -30,3 +31,7 @@ export default function RootContainer({ children }) {
     </View>
   );
 }
+
+RootContainer.propTypes = {
+  children: PropTypes.node,
+};
