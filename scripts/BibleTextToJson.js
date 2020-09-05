@@ -30,8 +30,8 @@
     Each verse will be a single string
 
     {
-      "Old Testament": [ [ [] ] ],
-      "New Testament": [ [ [] ] ]
+      "old": [ [ [] ] ],
+      "new": [ [ [] ] ]
     }
 
 */
@@ -46,8 +46,8 @@ const content = readFileSync(__dirname + '/' + importFile).toString();
 
 const oldTestLength = 39;
 
-const OLD_TESTAMENT = 'Old Testament';
-const NEW_TESTAMENT = 'New Testament';
+const OLD_TESTAMENT = 'old';
+const NEW_TESTAMENT = 'new';
 
 const json = {
   [OLD_TESTAMENT]: [],

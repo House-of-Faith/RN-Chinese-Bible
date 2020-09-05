@@ -13,11 +13,6 @@ const languages = {
   simplified
 };
 
-const testMap = {
-  old: 'Old Testament',
-  new: 'New Testament',
-};
-
 const books = {
   old: [
     'Genesis',
@@ -96,10 +91,9 @@ export default function useBible(initialState) {
   const bible = languages[language];
 
   const [testament, innerSetTestament] = useState(initialState?.testament || 'old'); // new
-  const testKey = testMap[testament];
   const [book, innerSetBook] = useState(initialState?.book ?? null);
   const [chapter, innerSetChapter] = useState(initialState?.chapter ?? null);
-  const verses = bible[testKey]?.[book]?.[chapter] || [];
+  const verses = bible[testament]?.[book]?.[chapter] || [];
 
   function nextChapter() {
     let nextChapter = chapter + 1;
@@ -107,13 +101,13 @@ export default function useBible(initialState) {
     let nextTest = testament;
 
     // maybe advance book
-    if (nextChapter >= bible[testKey]?.[book]?.length) {
+    if (nextChapter >= bible[testament]?.[book]?.length) {
       nextChapter = 0;
       nextBook += 1;
     }
 
     // maybe advance testament
-    if (nextBook >= bible[testKey]?.length) {
+    if (nextBook >= bible[testament]?.length) {
       nextBook = 0;
       nextTest = nextTest === 'old' ? 'new' : null;
     }
@@ -134,14 +128,14 @@ export default function useBible(initialState) {
     // maybe go to prev book
     if (prevChapter < 0) {
       prevBook -= 1;
-      prevChapter = (bible[testKey][prevBook]?.length || 0) - 1;
+      prevChapter = (bible[testament][prevBook]?.length || 0) - 1;
     }
 
     // maybe go to prev testament
     if (prevBook < 0) {
       prevTest = prevTest === 'new' ? 'old' : null;
       prevBook = books.old.length - 1;
-      prevChapter = bible[testMap.old][prevBook].length - 1;
+      prevChapter = bible[testament][prevBook].length - 1;
     }
 
     // did we reach the beginning the bible?
@@ -171,7 +165,7 @@ export default function useBible(initialState) {
       innerSetBook(null);
       innerSetChapter(null);
     }
-    const isValid = (bible?.[testKey]?.[payload] || 0).length > 0;
+    const isValid = (bible?.[testament]?.[payload] || 0).length > 0;
     if (!isValid) return;
     innerSetBook(payload);
   }
@@ -181,7 +175,7 @@ export default function useBible(initialState) {
     if (payload === null || payload === undefined) {
       innerSetChapter(null);
     }
-    const isValid = !!bible?.[testKey]?.[book]?.[payload];
+    const isValid = !!bible?.[testament]?.[book]?.[payload];
     if (!isValid) return;
     innerSetChapter(payload);
   }
@@ -193,7 +187,7 @@ export default function useBible(initialState) {
     books: books[testament], // array of book names
     setBook,
     chapter, // index
-    chapters: bible[testKey][book]?.length || 0, // integer
+    chapters: bible[testament][book]?.length || 0, // integer
     setChapter,
     verses, // array of verses
     nextChapter,
