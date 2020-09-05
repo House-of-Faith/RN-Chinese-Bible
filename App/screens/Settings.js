@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/native';
 
+import TranslatedText from 'components/common/TranslatedText';
 import SettingsOption from 'components/Settings/SettingsOption';
 import { selectors } from 'store';
 
@@ -105,7 +106,7 @@ const SubContainer = styled.View(
   }
 );
 
-const SubTitle = styled.Text(({ theme }) => ({
+const SubTitle = styled(TranslatedText)(({ theme }) => ({
   fontSize: 17,
   fontWeight: 'bold',
   marginBottom: 20,

@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import styled from '@emotion/native';
 
+import TranslatedText from 'components/common/TranslatedText';
 import Settings from 'screens/Settings';
 
 const Stack = createStackNavigator();
@@ -50,7 +51,7 @@ SettingsNavigator.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired
 };
 
-const Title = styled.Text(({ theme }) => ({
+const Title = styled(TranslatedText)(({ theme }) => ({
   fontSize: 22,
   color: theme.text.navbar,
 }));

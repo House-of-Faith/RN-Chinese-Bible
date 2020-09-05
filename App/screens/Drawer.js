@@ -9,6 +9,7 @@ import { useTheme } from 'emotion-theming';
 import styled from '@emotion/native';
 import { AntDesign as Icon } from '@expo/vector-icons';
 
+import TranslatedText from 'components/common/TranslatedText';
 import DrawerHeader from 'components/Drawer/DrawerHeader';
 import BookList from 'components/Drawer/BookList';
 import BookTitle from 'components/Drawer/BookTitle';
@@ -107,7 +108,7 @@ const ReturnContainer = styled.TouchableOpacity(() => ({
   width: '92%',
 }));
 
-const ReturnText = styled.Text(({ theme }) => ({
+const ReturnText = styled(TranslatedText)(({ theme }) => ({
   fontSize: 17,
   color: theme.text.secondary,
   marginLeft: 5,

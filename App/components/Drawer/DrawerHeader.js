@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/native';
 
+import TranslatedText from 'components/common/TranslatedText';
+
 export default function DrawerHeader({ testament, onPress }) {
   return (
     <Header>
@@ -53,7 +55,7 @@ const TitleContainer = styled.TouchableOpacity(
   }
 );
 
-const Title = styled.Text(({ theme, selected }) => ({
+const Title = styled(TranslatedText)(({ theme, selected }) => ({
   color: selected ? theme.text.card : theme.text.secondary,
   fontSize: 22,
 }));

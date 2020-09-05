@@ -4,6 +4,8 @@ import { Ionicons as Icon } from '@expo/vector-icons';
 import { useTheme } from 'emotion-theming';
 import styled from '@emotion/native';
 
+import TranslatedText from 'components/common/TranslatedText';
+
 export default function SettingsOption({ label, selected, onPress, fontSize }) {
   const { text } = useTheme();
 
@@ -51,7 +53,7 @@ const marginMap = {
   large: 14,
 };
 
-const Option = styled.Text(({ theme, fontSize }) => ({
+const Option = styled(TranslatedText)(({ theme, fontSize }) => ({
   fontSize: theme.fontSize[fontSize],
   marginLeft: 20,
   marginBottom: marginMap[fontSize],

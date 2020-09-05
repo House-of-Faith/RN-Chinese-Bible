@@ -9,6 +9,7 @@ import { useTheme } from 'emotion-theming';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import styled from '@emotion/native';
 
+import TranslatedText from 'components/common/TranslatedText';
 import Bible from 'screens/Bible';
 import { useBible } from 'lib/hooks';
 import { selectors } from 'store';
@@ -46,7 +47,7 @@ export default function MainNavigator({ navigation }) {
           headerRight: () => (
             <HeaderRight navigation={navigation} dropdownState={[showDropdown, setShowDropdown]} />
           ),
-          headerTitle: <Title>{`${books[book]} ${chapter + 1}`}</Title>,
+          headerTitle: <Title><Title>{books[book]}</Title>{' '}{chapter + 1}</Title>,
         }}
       >
         <Stack.Screen name='Bible' component={Bible} />
@@ -162,7 +163,7 @@ const DotMenu = styled.TouchableOpacity(() => ({
   marginLeft: 19,
 }));
 
-const Title = styled.Text(() => ({
+const Title = styled(TranslatedText)(() => ({
   fontSize: 22,
   color: '#ffffff',
 }));
@@ -183,7 +184,7 @@ const MenuItem = styled.TouchableOpacity(() => ({
   marginBottom: 20,
 }));
 
-const MenuText = styled.Text(({ theme }) => ({
+const MenuText = styled(TranslatedText)(({ theme }) => ({
   fontSize: 20,
   color: theme.text.menu,
 }));
