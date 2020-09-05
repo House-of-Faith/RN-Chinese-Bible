@@ -13,8 +13,10 @@ function TranslatedText({ translate, children, style, ...restOfProps }) {
   const language = useSelector(selectors.language);
 
   const text = translate ? getTranslation(language, children) : children;
+  
+  const englishStyle = language === 'english' ? {} : { paddingBottom: 2.75 };
 
-  return <RNText style={style} {...restOfProps}>{text}</RNText>;
+  return <RNText style={[style, englishStyle]} {...restOfProps}>{text}</RNText>;
 }
 
 function areEqual(prev, next) {

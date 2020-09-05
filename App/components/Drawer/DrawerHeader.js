@@ -8,19 +8,18 @@ export default function DrawerHeader({ testament, onPress }) {
   return (
     <Header>
       <TitleContainer
-        selected={testament === 'old'}
-        onPress={() => onPress('old')}
+        selected
+        onPress={() => {}}
       >
-        <Title selected={testament === 'old'}>
-          Old T.
+        <Title selected>
+          {testament === 'old' ? 'Old T.' : 'New T.'}
         </Title>
       </TitleContainer>
       <TitleContainer
-        selected={testament === 'new'}
-        onPress={() => onPress('new')}
+        onPress={() => onPress(testament === 'old' ? 'new' : 'old')}
       >
-        <Title selected={testament === 'new'}>
-          New T.
+        <Title>
+          {testament === 'old' ? 'New T.' : 'Old T.'}
         </Title>
       </TitleContainer>
     </Header>
@@ -43,7 +42,7 @@ const Header = styled.View(({ theme }) => ({
 }));
 
 const TitleContainer = styled.TouchableOpacity(
-  ({ theme, selected }) => {
+  ({ theme, selected = false }) => {
     if (!selected)
       return {
         borderBottomWidth: 1,
@@ -55,7 +54,7 @@ const TitleContainer = styled.TouchableOpacity(
   }
 );
 
-const Title = styled(TranslatedText)(({ theme, selected }) => ({
+const Title = styled(TranslatedText)(({ theme, selected = false }) => ({
   color: selected ? theme.text.card : theme.text.secondary,
   fontSize: 22,
 }));

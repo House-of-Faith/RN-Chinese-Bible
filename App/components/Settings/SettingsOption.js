@@ -50,7 +50,7 @@ const Button = styled.TouchableOpacity(() => ({
 const marginMap = {
   small: 23.5,
   medium: 20,
-  large: 14,
+  large: 15,
 };
 
 const Option = styled(TranslatedText)(({ theme, fontSize }) => ({

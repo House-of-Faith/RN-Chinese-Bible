@@ -1,5 +1,5 @@
 {
-	"old t.": "舊約",
+  "old t.": "舊約",
   "new t.": "新約",
   "old testament": "舊約",
   "new testament": "新約",
@@ -76,16 +76,18 @@
   "theme": "主題",
   "light mode": "淺色模式",
   "dark mode": "深色模式",
-  "light theme": "xxx",
-  "dark theme": "xxx",
+  "light theme": "淺色主題",
+  "dark theme": "深色主題",
+  "light": "淺色",
+  "dark": "深色",
   "language": "語言",
-  "english": "xxx",
+  "english": "英文",
   "traditional chinese": "繁體中文",
   "simplified chinese": "简体中文",
   "additional info": "額外資訊",
   "about us": "關於我們",
-  "font size": "xxx",
-  "small": "xxx",
-  "medium": "xxx",
-  "large": "xxx"
+  "font size": "文字大小",
+  "small": "小",
+  "medium": "中",
+  "large": "大"
 }
