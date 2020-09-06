@@ -7,17 +7,12 @@ import TranslatedText from 'components/common/TranslatedText';
 export default function DrawerHeader({ testament, onPress }) {
   return (
     <Header>
-      <TitleContainer
-        selected
-        onPress={() => {}}
-      >
+      <TitleContainer selected>
         <Title selected>
           {testament === 'old' ? 'Old T.' : 'New T.'}
         </Title>
       </TitleContainer>
-      <TitleContainer
-        onPress={() => onPress(testament === 'old' ? 'new' : 'old')}
-      >
+      <TitleContainer onPress={() => onPress(testament === 'old' ? 'new' : 'old')}>
         <Title>
           {testament === 'old' ? 'New T.' : 'Old T.'}
         </Title>
