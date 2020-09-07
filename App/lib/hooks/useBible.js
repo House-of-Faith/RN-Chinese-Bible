@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import english from 'assets/translations/english.json';
-import traditional from 'assets/translations/traditional.json';
-import simplified from 'assets/translations/simplified.json';
+import english from 'translations/bible/english.json';
+import traditional from 'translations/bible/traditional.json';
+import simplified from 'translations/bible/simplified.json';
 
 import { selectors } from 'store';
 
@@ -23,12 +23,12 @@ const books = {
     'Joshua',
     'Judges',
     'Ruth',
-    '1 Samuel',
-    '2 Samuel',
-    '1 Kings',
-    '2 Kings',
-    '1 Chronicles',
-    '2 Chronicles',
+    '1st Samuel',
+    '2nd Samuel',
+    '1st Kings',
+    '2nd Kings',
+    '1st Chronicles',
+    '2nd Chronicles',
     'Ezra',
     'Nehemiah',
     'Esther',
@@ -62,25 +62,25 @@ const books = {
     'John',
     'Acts',
     'Romans',
-    '1 Corinthians',
-    '2 Corinthians',
+    '1st Corinthians',
+    '2nd Corinthians',
     'Galatians',
     'Ephesians',
     'Philippians',
     'Colossians',
-    '1 Thessalonians',
-    '2 Thessalonians',
-    '1 Timothy',
-    '2 Timothy',
+    '1st Thessalonians',
+    '2nd Thessalonians',
+    '1st Timothy',
+    '2nd Timothy',
     'Titus',
     'Philemon',
     'Hebrews',
     'James',
-    '1 Peter',
-    '2 Peter',
-    '1 John',
-    '2 John',
-    '3 John',
+    '1st Peter',
+    '2nd Peter',
+    '1st John',
+    '2nd John',
+    '3rd John',
     'Jude',
     'Revelation'
   ]

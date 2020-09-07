@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/native';
 import { AntDesign as Icon } from '@expo/vector-icons';
 
+import { useI18n } from 'lib/hooks';
+
 export default function BookList({ book, onPress, isSelected = false }) {
+  const { i18n } = useI18n();
   const { text } = useTheme();
 
   return (
     <BookTitleContainer onPress={onPress}>
-      <BookTitle>{book}</BookTitle>
+      <BookTitle>{i18n(book)}</BookTitle>
       <Icon
         name={isSelected ? 'up' : 'down'}
         size={13}

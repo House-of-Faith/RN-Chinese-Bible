@@ -13,9 +13,10 @@ import DrawerHeader from 'components/Drawer/DrawerHeader';
 import BookList from 'components/Drawer/BookList';
 import BookTitle from 'components/Drawer/BookTitle';
 import ChapterList from 'components/Drawer/ChapterList';
-import { useBible } from 'lib/hooks';
+import { useBible, useI18n } from 'lib/hooks';
 
 export default function Drawer({ navigation }) {
+  const { i18n } = useI18n();
   const dispatch = useDispatch();
   const { background, text } = useTheme();
   const {
@@ -73,7 +74,7 @@ export default function Drawer({ navigation }) {
                 size={14}
                 color={text.secondary}
               />
-              <ReturnText>Return</ReturnText>
+              <ReturnText>{i18n('return')}</ReturnText>
             </ReturnContainer>
           </BookSelected>
         ) : (

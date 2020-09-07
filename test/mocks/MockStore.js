@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import { initialState } from 'store/reducers';
 
-const reducers = () => initialState;
+export default function MockStore({ children, state }) {
+  const reducers = () => ({ ...initialState, ...state });
 
-const store = createStore(reducers);
+  const store = createStore(reducers);
 
-export default function MockStore({ children }) {
   return (
     <Provider store={store}>
       {children}
@@ -17,5 +17,6 @@ export default function MockStore({ children }) {
 }
 
 MockStore.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  state: PropTypes.object,
 };

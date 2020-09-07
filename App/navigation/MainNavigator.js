@@ -10,12 +10,13 @@ import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import styled from '@emotion/native';
 
 import Bible from 'screens/Bible';
-import { useBible } from 'lib/hooks';
+import { useBible, useI18n } from 'lib/hooks';
 import { selectors } from 'store';
 
 const Stack = createStackNavigator();
 
 export default function MainNavigator({ navigation }) {
+  const { i18n } = useI18n();
   const dispatch = useDispatch();
   const { background } = useTheme();
 
@@ -46,7 +47,7 @@ export default function MainNavigator({ navigation }) {
           headerRight: () => (
             <HeaderRight navigation={navigation} dropdownState={[showDropdown, setShowDropdown]} />
           ),
-          headerTitle: <Title>{`${books[book]} ${chapter + 1}`}</Title>,
+          headerTitle: <Title>{`${i18n(books[book])} ${chapter + 1}`}</Title>,
         }}
       >
         <Stack.Screen name='Bible' component={Bible} />
@@ -60,6 +61,7 @@ MainNavigator.propTypes = {
 };
 
 function HeaderRight({ dropdownState, navigation }) {
+  const { i18n } = useI18n();
   const { text } = useTheme();
   const [showDropdown, setShowDropdown] = dropdownState;
   const onShare = async () => {
@@ -114,17 +116,17 @@ function HeaderRight({ dropdownState, navigation }) {
       {showDropdown && (
         <MenuContainer>
           <MenuItem onPress={onShare}>
-            <MenuText>Share</MenuText>
+            <MenuText>{i18n('share')}</MenuText>
           </MenuItem>
           <MenuItem
             onPress={() =>
               navigation.navigate('Settings')
             }
           >
-            <MenuText>Settings</MenuText>
+            <MenuText>{i18n('settings')}</MenuText>
           </MenuItem>
           <MenuItem onPress={onFeedback}>
-            <MenuText>Feedback</MenuText>
+            <MenuText>{i18n('feedback')}</MenuText>
           </MenuItem>
         </MenuContainer>
       )}
