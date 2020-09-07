@@ -2,10 +2,12 @@ import { useSelector } from 'react-redux';
 import get from 'lodash/get.js';
 
 import { selectors } from 'store';
-import translations from 'translations';
+import defaultTranslations from 'translations';
 
-export default function useI18n() {
-  const language = useSelector(selectors.language);
+export default function useI18n(args) {
+  const defaultLanguage = useSelector(selectors.language);
+  const language = args?.language || defaultLanguage;
+  const translations = args?.translations || defaultTranslations;
 
   function i18n(key) {
     return get(translations, `[${language}][${key}]`, 'xxx');
