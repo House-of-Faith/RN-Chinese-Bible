@@ -10,7 +10,8 @@ export default function useI18n(args) {
   const translations = args?.translations || defaultTranslations;
 
   function i18n(key) {
-    return get(translations, `[${language}][${key}]`, 'xxx');
+    if ('string' !== typeof key) return JSON.stringify(key); 
+    return get(translations, `${language}.${key}`, key);
   }
 
   return { i18n, language };

@@ -16,7 +16,7 @@ function setup({ language, translations }) {
 }
 
 describe('test for useI18n', () => {
-  test('returns default translation xxx for bad key', () => {
+  test('returns key as default if no translation for key', () => {
     // GIVEN THIS
     const translations = {
       french: {
@@ -29,7 +29,7 @@ describe('test for useI18n', () => {
     const result = i18n('badKey');
 
     // EXPECT THIS
-    expect(result).toEqual('xxx');
+    expect(result).toEqual('badKey');
   });
 
   test('returns translation for shallow key', () => {

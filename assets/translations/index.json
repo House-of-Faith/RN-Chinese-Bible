@@ -92,8 +92,8 @@
     "medium": "Medium",
     "large": "Large",
     "regular": "Regular"
-	},
-	"traditional": {
+  },
+  "traditional": {
     "old_t": "舊約",
     "new_t": "新約",
     "old_testament": "舊約",
@@ -186,8 +186,8 @@
     "medium": "中",
     "large": "大",
     "regular": "正常"
-	},
-	"simplified": {
+  },
+  "simplified": {
     "old_t": "旧约",
     "new_t": "新约",
     "old_testament": "旧约",
@@ -280,5 +280,5 @@
     "medium": "中",
     "large": "大",
     "regular": "正常"
-	}
+  }
 }
