@@ -8,7 +8,7 @@ import MockStore from 'test/mocks/MockStore';
 
 function setup({ text }) {
   return render(
-    <MockStore>
+    <MockStore state={{ language: 'english'}}>
       <ThemeProvider theme={themes['light']}>
         <Verse number={1} text={text} />
       </ThemeProvider>

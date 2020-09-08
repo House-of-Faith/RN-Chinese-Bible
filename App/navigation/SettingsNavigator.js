@@ -8,10 +8,12 @@ import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import styled from '@emotion/native';
 
 import Settings from 'screens/Settings';
+import { useI18n } from 'lib/hooks';
 
 const Stack = createStackNavigator();
 
 export default function SettingsNavigator({ navigation }) {
+  const { i18n } = useI18n();
   const { background, text } = useTheme();
 
   return (
@@ -37,7 +39,7 @@ export default function SettingsNavigator({ navigation }) {
             backgroundColor: background.navbar,
             shadowColor: 'transparent',
           },
-          headerTitle: <Title>Settings</Title>,
+          headerTitle: <Title>{i18n('settings')}</Title>,
         }}
       >
         <Stack.Screen name="Settings" component={Settings} />

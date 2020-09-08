@@ -3,7 +3,7 @@ import { isEqual } from 'lodash';
 export const initialState = {
   storeRehydrated: false,
   theme: 'light',
-  language: 'english', // simplified, traditional
+  language: 'traditional', // simplified, english
   fontSize: 'medium', // small, large
   showDropdown: false,
   currentScripture: {
