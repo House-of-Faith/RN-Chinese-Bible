@@ -6,6 +6,8 @@ import store from 'store';
 import AppTheme from 'theme/AppTheme';
 import RootNavigation from 'navigation/RootNavigation';
 import RootContainer from './RootContainer';
+import Bugsnag from 'lib/Bugsnag';
+Bugsnag;
 
 const App = () => {
   return (
