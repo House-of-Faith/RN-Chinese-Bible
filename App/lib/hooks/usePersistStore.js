@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from'react-redux';
 import useAppState from './useAppState';
 import useIsMounted from './useIsMounted';
 import initialState from 'store/reducers';
+import { notify } from 'lib/Tracking';
 
 export default function usePersistStore() {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ export default function usePersistStore() {
   function saveStore() {
     const jsonValue = JSON.stringify(state);
     AsyncStorage.setItem('@storage_Key', jsonValue).catch(err => {
-      console.log(err);
+      notify(err);
     });
   }
 
@@ -43,7 +44,7 @@ export default function usePersistStore() {
         payload: newState,
       });
     }).catch(err => {
-      console.log(err);
+      notify(err);
     });
   }
 }

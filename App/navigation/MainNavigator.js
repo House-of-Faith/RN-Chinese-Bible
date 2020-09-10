@@ -12,6 +12,7 @@ import styled from '@emotion/native';
 import Bible from 'screens/Bible';
 import { useBible, useI18n } from 'lib/hooks';
 import { selectors } from 'store';
+import { notify } from 'lib/Tracking';
 
 const Stack = createStackNavigator();
 
@@ -79,7 +80,7 @@ function HeaderRight({ dropdownState, navigation }) {
         // dismissed
       }
     } catch (error) {
-      alert(error.message);
+      notify(error);
     }
   };
 
@@ -98,7 +99,7 @@ function HeaderRight({ dropdownState, navigation }) {
         alert('Error');
       }
     } catch (error) {
-      alert(error.message);
+      notify(error);
     }
   };
 
