@@ -1,5 +1,7 @@
 import { isEqual } from 'lodash';
 
+import { leaveBreadcrumb } from 'lib/Tracking';
+
 export const initialState = {
   storeRehydrated: false,
   theme: 'light',
@@ -14,6 +16,7 @@ export const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
+  leaveBreadcrumb('Redux Action', action);
   const { type, payload } = action;
   switch (type) {
     case 'SET_CURRENT_SCRIPTURE':

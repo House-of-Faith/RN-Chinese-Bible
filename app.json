@@ -4,8 +4,8 @@
     "slug": "bible",
     "version": "1.0.0",
     "orientation": "portrait",
-		"icon": "./assets/icon.png",
-		"entryPoint": "./App/App.js",
+    "icon": "./assets/icon.png",
+    "entryPoint": "./App/App.js",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -23,6 +23,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": ""
+    "description": "",
+    "extra": {
+      "bugsnag": {
+        "apiKey": "5463be516f2f1ace67c9ccffa125a229"
+      }
+    }
   }
 }
