@@ -110,9 +110,9 @@ PageSwiper.defaultProps = {
 };
 
 PageSwiper.propTypes = {
-  prev: PropTypes.array,
-  curr: PropTypes.array,
-  next: PropTypes.array,
+  prev: PropTypes.arrayOf(PropTypes.string),
+  curr: PropTypes.arrayOf(PropTypes.string),
+  next: PropTypes.arrayOf(PropTypes.string),
   onPrev: PropTypes.func,
   onNext: PropTypes.func,
 };
