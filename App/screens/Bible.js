@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/native';
-import GestureRecognizer from 'react-native-swipe-gestures';
+import Swiper from 'react-native-swiper';
 
 import { selectors } from 'store';
 import { useBible, useIsMounted } from 'lib/hooks';
@@ -25,8 +25,10 @@ export default function Main() {
     chapter, // index
     setChapter,
     verses, // array of verses
-    nextChapter,
-    prevChapter,
+    nextVerses,
+    prevVerses,
+    // nextChapter: moveNext,
+    // prevChapter: movePrev,
   } = useBible({ testament: testGlobal, book: bookGlobal, chapter: chapterGlobal });
 
   useEffect(() => {
@@ -53,30 +55,38 @@ export default function Main() {
     dispatch({ type: 'SET_CURRENT_SCRIPTURE', payload: { testament, book, chapter } });
   }
 
-  const config = {
-    velocityThreshold: 0.3,
-    directionalOffsetThreshold: 100,
-  };
-
   useEffect(() => {
     if (ref?.current) ref.current.scrollTo({ y: 0 });
   }, [verses]);
 
   return (
-    <SafeArea>
-      <Container ref={ref}>
-        <GestureRecognizer
-          onSwipeLeft={nextChapter}
-          onSwipeRight={prevChapter}
-          config={config}
-        >
+    <Swiper showsPagination={false} loop={false} onIndexChanged={() => {
+      // TODO: figure out how to manage the swipe index
+      // moveNext();
+    }}>
+      <SafeArea>
+        <Container ref={ref}>
           <Spacer />
           <Chapter verses={verses} />
-        </GestureRecognizer>
-      </Container>
-    </SafeArea>
+        </Container>
+      </SafeArea>
+      {nextVerses.length > 0 && <SafeArea>
+        <Container ref={ref}>
+          <Spacer />
+          <Chapter verses={nextVerses} />
+        </Container>
+      </SafeArea>}
+      {prevVerses.length > 0 && <SafeArea>
+        <Container ref={ref}>
+          <Spacer />
+          <Chapter verses={prevVerses} />
+        </Container>
+      </SafeArea>}
+    </Swiper>
   );
+
 }
+
 
 const SafeArea = styled.SafeAreaView(({ theme }) => ({
   backgroundColor: theme.background.reading,

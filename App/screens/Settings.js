@@ -81,7 +81,7 @@ export default function Settings() {
 
       <SubContainer>
         <SubTitle>{i18n('additional_info')}</SubTitle>
-        <SettingsOption label={i18n('about_us')} selected={false} onPress={() => {}} />
+        <SettingsOption label={i18n('about_us')} selected={false} onPress={() => { }} />
       </SubContainer>
     </Container>
   );
@@ -110,6 +110,6 @@ const SubContainer = styled.View(
 const SubTitle = styled.Text(({ theme }) => ({
   fontSize: 17,
   fontWeight: 'bold',
-  marginBottom: 20,
+  marginBottom: 15,
   color: theme.text.menu,
 }));
