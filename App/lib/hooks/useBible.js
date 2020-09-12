@@ -95,22 +95,27 @@ export default function useBible(initialState) {
   const [chapter, innerSetChapter] = useState(initialState?.chapter ?? null);
   const verses = bible[testament]?.[book]?.[chapter] || [];
 
-  function nextChapter() {
-    let nextChapter = chapter + 1;
+  function getNext() {
+    let nextChapter = chapter === null ? null : chapter + 1;
     let nextBook = book;
     let nextTest = testament;
 
     // maybe advance book
-    if (nextChapter >= bible[testament]?.[book]?.length) {
+    if (nextChapter >= bible[nextTest]?.[nextBook]?.length) {
       nextChapter = 0;
       nextBook += 1;
     }
 
     // maybe advance testament
-    if (nextBook >= bible[testament]?.length) {
+    if (nextBook >= bible[nextTest]?.length) {
       nextBook = 0;
       nextTest = nextTest === 'old' ? 'new' : null;
     }
+    return { nextChapter, nextBook, nextTest };
+  }
+
+  function nextChapter() {
+    const { nextChapter, nextBook, nextTest } = getNext();
 
     // did we reach the end of the bible?
     if (nextTest === null) return;
@@ -120,23 +125,29 @@ export default function useBible(initialState) {
     if (nextTest !== testament) innerSetTestament(nextTest);
   }
 
-  function prevChapter() {
-    let prevChapter = chapter - 1;
+  function getPrev() {
+    let prevChapter = chapter === null ? null : chapter - 1;
     let prevBook = book;
     let prevTest = testament;
 
     // maybe go to prev book
     if (prevChapter < 0) {
       prevBook -= 1;
-      prevChapter = (bible[testament][prevBook]?.length || 0) - 1;
+      prevChapter = (bible[testament]?.[prevBook]?.length || 0) - 1;
     }
 
     // maybe go to prev testament
     if (prevBook < 0) {
       prevTest = prevTest === 'new' ? 'old' : null;
       prevBook = books.old.length - 1;
-      prevChapter = bible[testament][prevBook].length - 1;
+      prevChapter = bible[prevTest]?.[prevBook]?.length - 1;
     }
+
+    return { prevChapter, prevBook, prevTest };
+  }
+
+  function prevChapter() {
+    const { prevChapter, prevBook, prevTest } = getPrev();
 
     // did we reach the beginning the bible?
     if (prevTest === null) return;
@@ -180,6 +191,11 @@ export default function useBible(initialState) {
     innerSetChapter(payload);
   }
 
+  const { nextChapter: nextCh, nextBook, nextTest } = getNext();
+  const { prevChapter: prevCh, prevBook, prevTest } = getPrev();
+  const nextVerses = bible[nextTest]?.[nextBook]?.[nextCh] || [];
+  const prevVerses = bible[prevTest]?.[prevBook]?.[prevCh] || [];
+
   return {
     testament, // old/new
     setTestament,
@@ -192,5 +208,7 @@ export default function useBible(initialState) {
     verses, // array of verses
     nextChapter,
     prevChapter,
+    nextVerses,
+    prevVerses,
   };
 }
