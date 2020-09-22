@@ -18,8 +18,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    },
+			"bundleIdentifier": "faith.houseof.chinesebible",
+			"supportsTablet": true,
+			"buildNumber": "1.0.0"
+		},
+		"android": {
+			"package": "faith.houseof.chinesebible",
+			"versionCode": 1
+		},
     "web": {
       "favicon": "./assets/favicon.png"
     },
