@@ -9,6 +9,32 @@ export default function Verse({ number, text }) {
   const size = useSelector(selectors.fontSize);
   const isEnglish = useSelector(selectors.language) === 'english';
 
+  const isMounted = useIsMounted();
+
+  const [verseParts, setVerseParts] = useState(breakVerseIntoParts());
+  const [startsWithItalics, setStartsWithItalics] = useState(doesItStartWithItalics());
+
+  useEffect(() => {
+    if (!isMounted) return;
+    if (!isEnglish) return;
+    setVerseParts(breakVerseIntoParts());
+    setStartsWithItalics(doesItStartWithItalics());
+  }, [isEnglish, text, size]);
+
+  function breakVerseIntoParts() {
+    if (!isEnglish) return [];
+    return text.split(/\[|\]/);
+  }
+
+  function doesItStartWithItalics() {
+    if (!isEnglish) return;
+    return text.startsWith('[');
+  }
+
+  function isItalicized(i) {
+    return i % 2 === (startsWithItalics ? 0 : 1);
+  }
+
   if (!isEnglish)
     return (
       <VerseContainer size={size}>
@@ -18,28 +44,6 @@ export default function Verse({ number, text }) {
       </VerseContainer>
     );
 
-  const isMounted = useIsMounted();
-
-  const [verseParts, setVerseParts] = useState(breakVerseIntoParts());
-  const [startsWithItalics, setStartsWithItalics] = useState(doesItStartWithItalics());
-
-  useEffect(() => {
-    if (!isMounted) return;
-    setVerseParts(breakVerseIntoParts());
-    setStartsWithItalics(doesItStartWithItalics());
-  }, [isEnglish, text, size]);
-
-  function breakVerseIntoParts() {
-    return text.split(/\[|\]/);
-  }
-
-  function doesItStartWithItalics() {
-    return text.startsWith('[');
-  }
-
-  function isItalicized(i) {
-    return i % 2 === (startsWithItalics ? 0 : 1);
-  }
   return (
     <VerseContainer size={size}>
       <Text size={size}>

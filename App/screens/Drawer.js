@@ -30,21 +30,16 @@ export default function Drawer({ navigation }) {
 
   return (
     <SafeAreaView
-      style={{ height: '100%', backgroundColor: background.menu }}
+      style={{ flex: 1, paddingTop: 20, backgroundColor: background.menu }}
     >
-      <ScrollView
-        style={{
-          marginTop: 7,
-          marginHorizontal: 20,
+      <DrawerHeader
+        testament={testament}
+        onPress={(newTest) => {
+          setBook(null);
+          setTestament(newTest);
         }}
-      >
-        <DrawerHeader
-          testament={testament}
-          onPress={(newTest) => {
-            setBook(null);
-            setTestament(newTest);
-          }}
-        />
+      />
+      <ScrollView style={{ marginHorizontal: 20 }}>
         {book !== null ? (
           <BookSelected>
             <BookTitle
@@ -60,7 +55,7 @@ export default function Drawer({ navigation }) {
                   payload: { testament, book, chapter: selected },
                 });
                 navigation.closeDrawer(); // eslint-disable-line
-                // setBook(null);
+                setBook(null);
               }}
             />
             <ReturnContainer

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { selectors } from 'store';
 import { useBible, useIsMounted } from 'lib/hooks';
 import PageSwiper from 'components/Bible/PageSwiper';
+import SettingsDropdown from 'components/Settings/SettingsDropdown';
 
-export default function Main() {
-
+export default function Bible({ navigation }) {
   const isMounted = useIsMounted();
   const dispatch = useDispatch();
   const {
@@ -54,13 +55,20 @@ export default function Main() {
   }
 
   return (
-    <PageSwiper
-      prev={prevVerses}
-      curr={verses}
-      next={nextVerses}
-      onNext={moveNext}
-      onPrev={movePrev}
-    />
+    <>
+      <PageSwiper
+        prev={prevVerses}
+        curr={verses}
+        next={nextVerses}
+        onNext={moveNext}
+        onPrev={movePrev}
+      />
+      <SettingsDropdown navigation={navigation} />
+    </>
   );
 
 }
+
+Bible.propTypes = {
+  navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired
+};

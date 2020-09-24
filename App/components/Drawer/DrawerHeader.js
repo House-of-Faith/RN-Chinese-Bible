@@ -38,6 +38,7 @@ const Header = styled.View(({ theme }) => ({
   borderBottomWidth: 1,
   borderBottomColor: theme.border.color,
   paddingBottom: 10,
+  marginHorizontal: 20,
 }));
 
 const TitleContainer = styled.TouchableOpacity(

@@ -1,29 +1,30 @@
+/* eslint-disable react/display-name */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { Share } from 'react-native';
-import * as MailComposer from 'expo-mail-composer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from 'emotion-theming';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import styled from '@emotion/native';
 
+import Settings from 'screens/Settings';
 import Bible from 'screens/Bible';
 import { useBible, useI18n } from 'lib/hooks';
 import { selectors } from 'store';
-import { notify } from 'lib/Tracking';
 
 const Stack = createStackNavigator();
 
-export default function MainNavigator({ navigation }) {
+export default function MainNavigator({ navigation: drawerNavigation }) {
   const { i18n } = useI18n();
   const dispatch = useDispatch();
-  const { background } = useTheme();
+  const { background, text } = useTheme();
 
   const showDropdown = useSelector(selectors.showDropdown);
   const { books, setTestament } = useBible();
-  const { testament, book, chapter } = useSelector(selectors.currentScripture);
+  const currentScripture = useSelector(selectors.currentScripture);
+  const { testament, book, chapter } = currentScripture;
 
   const setShowDropdown = () => {
     if (showDropdown) dispatch({ type: 'HIDE_DROPDOWN' });
@@ -42,16 +43,36 @@ export default function MainNavigator({ navigation }) {
             backgroundColor: background.navbar,
             shadowColor: 'transparent',
           },
-          // eslint-disable-next-line react/display-name
-          headerLeft: () => <HeaderLeft navigation={navigation} showDropdown={showDropdown} />,
-          // eslint-disable-next-line react/display-name
-          headerRight: () => (
-            <HeaderRight navigation={navigation} dropdownState={[showDropdown, setShowDropdown]} />
-          ),
-          headerTitle: <Title>{`${i18n(books[book])} ${chapter + 1}`}</Title>,
         }}
       >
-        <Stack.Screen name='Bible' component={Bible} />
+        <Stack.Screen
+          name='Bible'
+          component={Bible}
+          options={() => ({
+            headerLeft: () => <HeaderLeft navigation={drawerNavigation} />,
+            headerRight: () => <HeaderRight setShowDropdown={setShowDropdown} />,
+            headerTitle: () => <Title>{`${i18n(books[book])} ${chapter + 1}`}</Title>,
+          })}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={navigation.goBack}
+                style={{ marginLeft: 19 }}
+              >
+                <Icon
+                  name="arrow-left"
+                  size={24}
+                  color={text.navbar}
+                />
+              </TouchableOpacity>
+            ),
+            headerTitle: <Title>{i18n('settings')}</Title>,
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -61,99 +82,54 @@ MainNavigator.propTypes = {
   navigation: PropTypes.object
 };
 
-function HeaderRight({ dropdownState, navigation }) {
-  const { i18n } = useI18n();
+const Title = styled.Text(() => ({
+  fontSize: 22,
+  color: '#ffffff',
+}));
+
+/*
+ *
+ *
+ * HeaderRight
+ *  
+ * 
+ */
+
+function HeaderRight({ setShowDropdown }) {
   const { text } = useTheme();
-  const [showDropdown, setShowDropdown] = dropdownState;
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        url: 'https://github.com/House-of-Faith/RN-Chinese-Bible',
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      notify(error);
-    }
-  };
-
-  const onFeedback = async () => {
-    try {
-      const result = await MailComposer.isAvailableAsync();
-      console.log(result);
-
-      if (result) {
-        MailComposer.composeAsync({
-          recipients: ['feedback@houseof.faith'],
-          subject: '',
-          body: '',
-        });
-      } else {
-        alert('Error');
-      }
-    } catch (error) {
-      notify(error);
-    }
-  };
-
   return (
-    <HamburgerMenu
-      onPress={() => {
-        setShowDropdown(!showDropdown);
-      }}
-    >
+    <DotMenu onPress={() => setShowDropdown(true)}>
       <Icon
         name='dots-vertical'
         size={21}
         color={text.navbar}
       />
-      {showDropdown && (
-        <MenuContainer>
-          <MenuItem onPress={onShare}>
-            <MenuText>{i18n('share')}</MenuText>
-          </MenuItem>
-          <MenuItem
-            onPress={() =>
-              navigation.navigate('Settings')
-            }
-          >
-            <MenuText>{i18n('settings')}</MenuText>
-          </MenuItem>
-          <MenuItem onPress={onFeedback}>
-            <MenuText>{i18n('feedback')}</MenuText>
-          </MenuItem>
-        </MenuContainer>
-      )}
-    </HamburgerMenu>
+    </DotMenu>
   );
 }
 
 HeaderRight.propTypes = {
-  dropdownState: PropTypes.arrayOf(([val, func], _key, componentName, _location, propFullName) => {
-    if (!(typeof val === 'boolean' && typeof func === 'function')) {
-      return new Error(`Invalid prop ${propFullName} supplied to ${componentName}!`);
-    }
-  }).isRequired,
-  navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired
+  setShowDropdown: PropTypes.func.isRequired,
 };
 
-const HamburgerMenu = styled.TouchableOpacity(() => ({
+const DotMenu = styled.TouchableOpacity(() => ({
   paddingRight: 19,
 }));
+
+/*
+ *
+ *
+ * HeaderLeft
+ *  
+ * 
+ */
 
 function HeaderLeft({ navigation }) {
   const { text } = useTheme();
   return (
-    <DotMenu onPress={() => navigation.toggleDrawer()}>
+    <LeftHeaderButton onPress={navigation.toggleDrawer}>
       <Icon name='menu' size={22} color={text.navbar} />
-    </DotMenu>
+    </LeftHeaderButton>
   );
 }
 
@@ -161,32 +137,6 @@ HeaderLeft.propTypes = {
   navigation: PropTypes.object
 };
 
-const DotMenu = styled.TouchableOpacity(() => ({
+const LeftHeaderButton = styled.TouchableOpacity(() => ({
   marginLeft: 19,
-}));
-
-const Title = styled.Text(() => ({
-  fontSize: 22,
-  color: '#ffffff',
-}));
-
-const MenuContainer = styled.View(({ theme }) => ({
-  position: 'absolute',
-  top: -7,
-  right: 10,
-  height: 153,
-  width: 125,
-  backgroundColor: theme.background.menu,
-  paddingLeft: 20,
-  paddingTop: 20,
-}));
-
-const MenuItem = styled.TouchableOpacity(() => ({
-  width: 88,
-  marginBottom: 20,
-}));
-
-const MenuText = styled.Text(({ theme }) => ({
-  fontSize: 20,
-  color: theme.text.menu,
 }));
