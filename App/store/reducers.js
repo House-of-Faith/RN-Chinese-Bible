@@ -2,6 +2,16 @@ import { isEqual } from 'lodash';
 
 import { leaveBreadcrumb } from 'lib/Tracking';
 
+function parseJSON(str) {
+  let json;
+  try {
+    json = JSON.parse(str);
+  } catch (e) {
+    json = str;
+  }
+  return json;
+}
+
 export const initialState = {
   storeRehydrated: false,
   theme: 'light',
@@ -17,7 +27,12 @@ export const initialState = {
 
 export default function reducer(state = initialState, action) {
   leaveBreadcrumb('Redux Action', action);
-  const { type, payload } = action;
+  let { type, payload } = action;
+
+  // I am not sure why/how/when this is happening, but for some reason
+  // the action payload is serializing objects, so we need to deserialize
+  payload = parseJSON(payload);
+
   switch (type) {
     case 'SET_CURRENT_SCRIPTURE':
       return setCurrentScripture(state, payload);

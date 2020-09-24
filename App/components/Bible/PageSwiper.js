@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Dimensions } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { Dimensions, FlatList } from 'react-native';
 import styled from '@emotion/native';
 
 import Chapter from 'components/Bible/Chapter';
